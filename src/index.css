@@ -1,0 +1,158 @@
+html {
+  background-color: black;
+  overflow-x: hidden;
+}
+
+body {
+  margin: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+
+/* About Styles */
+
+.about-container {
+  display: flex; 
+  flex-direction:column;
+  align-items: center;
+  color: white; 
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom:0;
+  max-width: 1600px;
+  margin: auto;
+  background-color: black; 
+  height: 100vh;
+}
+
+#about-page {
+  opacity: 0; 
+  visibility: hidden;
+  transition: visibility 0.3s, opacity 0.3s ease-in-out; 
+}
+
+
+#about-page.show {
+  visibility: visible;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@keyframes move {
+  from {right: -500px}
+  to {right: 0px}
+}
+
+
+.about-info-container {
+  width: 70%;
+  margin-top: 0px;
+  text-align: center;
+  height: 400px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  font-size: 22px;
+}
+
+.about-info-container h1 {
+  font-family: "VT323";
+}
+
+.about-info-container h4 {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 30px;
+  font-family: "JetBrains Mono";
+  
+}
+
+.about-info-container h3 {
+  margin-bottom: 0;
+  font-family: "VT323";
+}
+
+
+/* Hamburger Styles */
+
+.hamburger-about {
+  width: 95%;
+  height: 10vh;
+  border: 2px solid #c3c3c3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 0 auto;
+  cursor: pointer;
+  transition: background-color .3s, color .3s;
+}
+.hamburger-about:hover {
+  background-color: #c3c3c3;
+  color: black;
+  transition: background-color .3s, color .3s;
+}
+
+.hamburger-shopall {
+  width: 95%;
+  height: 10vh;
+  border: 2px solid #c3c3c3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: none;
+  margin: 0 auto 0 auto;
+  cursor:pointer;
+  transition: background-color .3s, color .3s;
+  color: white;
+  text-decoration: none;
+}
+.hamburger-shopall:hover {
+  transition: background-color .3s, color .3s;
+  background-color: #c3c3c3;
+  color: black;
+}
+
+.hamburger-cart {
+  width: 95%;
+  height: 10vh;
+  border: 2px solid #c3c3c3;
+  border-top: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 0 auto;
+  cursor: pointer;
+  transition: background-color .3s, color .3s;
+
+}
+.hamburger-cart:hover {
+  transition: background-color .3s, color .3s;
+  background-color: #c3c3c3;
+  color: black;
+}
+
+.stop-scrolling {
+  overflow-y : hidden;
+}

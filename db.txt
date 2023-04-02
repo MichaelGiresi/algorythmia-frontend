@@ -1,0 +1,88 @@
+database name : algorythmia
+
+Selling products
+
+The products need to have a products table, with a products_category table
+
+tables: {
+    shipping_address {
+
+            id bigint, primary key auto increment
+            city varchar(255)
+            country varchar(255)
+            state varchar(255)
+            street is varchar(255)
+            zip_code varchar(255) 
+                
+            }
+
+    billing_address {
+
+            id bigint, primary key auto increment
+            city varchar(255)
+            country varchar(255)
+            state varchar(255)
+            street is varchar(255)
+            zip_code varchar(255) 
+                
+            }
+
+    country_codes {
+            id int (primary key)
+            code varchar(3)
+            name varchar(255)
+            }
+
+    customer {
+                id bigint primary key 
+                first_name varchar(255)
+                last_name varchar(255)
+                email varchar(255)
+
+             }
+
+    order_item {
+
+                id bigint primary key auto increments
+                image_url varchar(255)
+                quantity int 
+                unit_price decimal (10,2)
+                order_id bigint foreign key from orders
+                product_id foreign key from product
+               }
+
+    orders {
+            id bigint primary key auto increment
+            order_tracking_number varchar(255)
+            total_price decimal 10,2
+            total_quantity int not null
+            billing_address_id bigint foreign key from billing_address
+            customer_id bigint foreign key from customer
+            shipping_address_id bigint foreign key from shipping_address
+            status varchar(128)
+            date_created datetime(6)
+            last_updated datetime(6)
+        }
+
+    product {
+            id bigint primary key auto increments
+            sku varchar(255)
+            name varchar(255)
+            description varchar(255)
+            unit_price decimal 10,2
+            image_url varchar(255)
+            active bit(1)
+            units_in_stock int 
+            date_created datetime(6)
+            last_updated datetime(6)
+            category bigint id forein key from product_category
+            }
+
+    product_category {
+                        id bigint primary key auto increments
+                        category_name varchar(255)
+                     }
+
+
+}
+

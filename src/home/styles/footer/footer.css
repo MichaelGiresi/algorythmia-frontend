@@ -1,0 +1,160 @@
+.footer {
+  max-width: 1600px;
+  margin: 0 auto 0 auto;
+  height: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  flex-direction: column;
+  width: 100%;
+}
+@media (min-width: 1440px) {
+  .footer {
+    margin-bottom: 50px;
+  }
+}
+@media (min-width: 1024px) {
+  .footer {
+    margin-bottom: 50px;
+  }
+}
+@media (min-width: 1300px) {
+  .footer {
+    height: 400px;
+    margin-bottom: 0px;
+  }
+}
+@media (min-width: 1600px) {
+  .footer {
+    height: 600px;
+  }
+}
+
+.footer-shop-all {
+  font-size: 60px;
+  font-family: "JetBrains Mono";
+  position: absolute;
+  color: #c3c3c3;
+  margin-top: 110px;
+  text-decoration: none;
+}
+@media (min-width: 1024px) {
+  .footer-shop-all {
+    font-size: 120px;
+    margin-top: 90px;
+  }
+}
+@media (min-width: 1600px) {
+  .footer-shop-all {
+    font-size: 150px;
+    margin-top: 200px;
+  }
+}
+
+.footer-oval {
+  border: 1px solid white;
+  width: 280px;
+  height: 100px;
+  border-radius: 100%;
+  margin-top: 100px;
+}
+@media (min-width: 1024px) {
+  .footer-oval {
+    width: 430px;
+    height: 140px;
+  }
+}
+@media (min-width: 1600px) {
+  .footer-oval {
+    width: 550px;
+    height: 180px;
+    margin-top: 200px;
+  }
+}
+
+.footer-separator {
+  height: 1px;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto 0 auto;
+  background-color: white;
+  margin-bottom: 40px;
+}
+
+.footer-container {
+  width: 95%;
+  height: 130px;
+  color: #c3c3c3;
+  font-family: "JetBrains Mono";
+  font-weight: bold;
+  max-width: 1600px;
+  margin: 0 auto 0 auto;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px white solid;
+  font-size: 10px;
+}
+
+.footer-links-container {
+  display: flex;
+  justify-content: space-between;
+  font-family: "JetBrains Mono";
+  font-weight: bold;
+}
+
+.footer-container-mobile {
+  width: 95%;
+  height: 70px;
+  color: #c3c3c3;
+  max-width: 1600px;
+  margin: 0 auto 0 auto;
+  display: flex;
+  color: #c3c3c3;
+  text-decoration: none;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px white solid;
+  font-size: 10px;
+  font-family: "JetBrains Mono";
+  font-weight: bold;
+}
+@media (min-width: 1024px) {
+  .footer-container-mobile {
+    font-size: 15px;
+  }
+}
+@media (min-width: 1440px) {
+  .footer-container-mobile {
+    font-size: 20px;
+  }
+}
+
+.footer-links-container-mobile {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  font-family: "JetBrains Mono";
+  font-weight: bold;
+}
+@media (min-width: 768px) {
+  .footer-links-container-mobile {
+    width: 40%;
+  }
+}
+@media (min-width: 1024px) {
+  .footer-links-container-mobile {
+    width: 35%;
+  }
+}
+@media (min-width: 1440px) {
+  .footer-links-container-mobile {
+    width: 30%;
+  }
+}
+
+.footer-algo {
+  color: #c3c3c3;
+  text-decoration: none;
+}/*# sourceMappingURL=footer.css.map */

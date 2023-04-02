@@ -1,0 +1,48 @@
+TODO:
+
+
+    
+
+DONE!        -- Create Database - Create tables for products, product category, reviews, customers, cart state, orders, country codes, state codes users
+DONE!        -- Create backend using Java and spring boot to communicate between database and react
+DONE!        -- Implement fetch api in react for database
+        -- Refactor HTML to utilize props
+        -- Create product page
+        -- Create checkout page
+        -- Implement authentication + authorization with okta
+        -- Create true cart state, and be able to purchase items and push the order to the database
+        -- Create Admin page, where the admin can create, remove and change quantity of products and read orders
+        -- implement stripe to accept payment processing
+        -- deploy the database and java backend to the cloud
+         -- deploy the front end to netlifly
+
+
+
+
+// devlog
+
+
+--- April 1st
+
+
+        -- Downloaded Algorythmia from Github, havent updated the project in 7 months.
+
+        -- Created a full database regarding all functionality for the site
+
+        -- Created a spring book application to create a backend server for communication between react and mysql
+
+        -- Tested the api successfully. React, spring boot, and mysql are communicating.
+
+
+
+
+
+---- Goals for April 2nd
+
+        -- upload images to hosting site, or convert them to blobs, and have them be loaded in from the database. Implement this on Hero, Upcomming, All Products
+
+        -- Figure out how to dynamically create product pages for each product. Be able to click each product and bring it to a specific product page
+
+        -- create product page and have it upload information dynamically to the server.
+
+        -- Figure out a solution for sizes of clothing. Should I add a new column, or just implement it into one of the already existing columns
