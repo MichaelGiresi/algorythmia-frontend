@@ -1,0 +1,421 @@
+.product {
+  max-width: 1600px;
+  margin: 0 auto 0 auto;
+  margin-top: 3%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-hero-container {
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-bottom: 220px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-image-container {
+  width: 95%;
+  background-color: white;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 50px auto;
+}
+
+.product-hero-info {
+  color: #c3c3c3;
+  width: 95%;
+  margin: 0 auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  word-wrap: break-word;
+  align-items: center;
+}
+
+#product-name {
+  font-size: xx-large;
+  margin-bottom: 50px;
+  font-family: "JetBrains Mono";
+}
+
+.product-hero-price-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#product-price {
+  font-size: xx-large;
+  margin-bottom: 15px;
+  font-family: "JetBrains Mono";
+}
+
+#product-unit-price {
+  font-size: x-large;
+  margin-bottom: 50px;
+  font-family: "JetBrains Mono";
+}
+
+.product-hero-size-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#product-size {
+  font-size: xx-large;
+  margin-bottom: 15px;
+  font-family: "JetBrains Mono";
+}
+
+.product-size-selector-container {
+  display: flex;
+  background-color: black;
+  border-radius: 5px;
+  color: #c3c3c3;
+  font-family: "JetBrains Mono";
+  font-size: x-large;
+  width: 75%;
+  text-align: center;
+  max-width: 350px;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.product-hero-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+}
+
+#product-info {
+  font-family: "JetBrains Mono";
+  font-size: xx-large;
+  margin-bottom: 15px;
+}
+
+#product-info-details {
+  font-family: "JetBrains Mono";
+  font-size: medium;
+  line-height: 1.9;
+}
+
+#product-add-to-cart-button {
+  background-color: #c3c3c3;
+  border: none;
+  border-radius: 5px;
+}
+
+.product-otherproducts-container {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  color: #c3c3c3;
+  margin-bottom: 220px;
+}
+
+.products-otherproducts-title {
+  font-family: JetBrains Mono;
+  font-size: xx-large;
+  word-wrap: break-word;
+}
+
+.product-otherproducts-info {
+  width: 95%;
+  text-align: justify;
+  font-size: medium;
+  line-height: 1.9;
+  font-family: JetBrains Mono;
+  margin-bottom: 50px;
+}
+
+.product-otherproducts-imagecontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* background-color: grey; */
+}
+
+.product-otherproducts-slide1-container {
+  width: 100%;
+  background-color: white;
+  border-radius: 12px;
+  margin-bottom: 50px;
+}
+
+#product-otherproducts-slide1-image {
+  width: 100%;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+
+.product-otherproduct1-info {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  margin: 0 auto 0 auto;
+  color: black;
+  font-family: JetBrains Mono;
+}
+
+@media (min-width: 768px) {
+  .product-hero-container {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 220px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .product-image-container {
+    width: 50%;
+    background-color: white;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #product-name {
+    font-size: large;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-info {
+    font-family: "JetBrains Mono";
+    font-size: small;
+    margin-bottom: 15px;
+  }
+  #product-price {
+    font-size: small;
+    margin-bottom: 15px;
+    font-family: "JetBrains Mono";
+  }
+  #product-unit-price {
+    font-size: small;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-size {
+    font-size: small;
+    margin-bottom: 15px;
+    font-family: "JetBrains Mono";
+  }
+  .product-size-selector-container {
+    display: flex;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+    font-size: small;
+    width: 75%;
+    justify-content: space-between;
+  }
+  .product-hero-info {
+    color: #c3c3c3;
+    width: 50%;
+    height: auto;
+    margin-bottom: 50px;
+    margin-left: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  #product-info-details {
+    font-family: "JetBrains Mono";
+    font-size: small;
+    line-height: 1.5;
+  }
+  #product-add-to-cart-button {
+    background-color: #c3c3c3;
+    border: none;
+    border-radius: 12px;
+    width: 100%;
+  }
+  .product-hero-button-container {
+    width: 100%;
+  }
+  .product-hero-button-container button {
+    width: 100%;
+    height: 40px;
+    font-family: "JetBrains Mono";
+    font-size: 25px;
+    margin-top: 20px;
+  }
+  .product-hero-price-container {
+    display: flex;
+  }
+  .product-hero-size-container {
+    display: flex;
+  }
+  .product-hero-info-container {
+    display: flex;
+  }
+  .product-otherproducts-imagecontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* background-color: grey; */
+  }
+  .product-otherproducts-slide1-container {
+    width: 32%;
+    background-color: white;
+    border-radius: 12px;
+    margin-bottom: 50px;
+  }
+}
+@media (min-width: 800px) {
+  #product-name {
+    font-size: x-large;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-price {
+    font-size: medium;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-info {
+    font-family: "JetBrains Mono";
+    font-size: medium;
+    margin-bottom: 15px;
+  }
+  #product-unit-price {
+    font-size: medium;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-size {
+    font-size: medium;
+    margin-bottom: 15px;
+    font-family: "JetBrains Mono";
+  }
+  .product-size-selector-container {
+    display: flex;
+    margin-bottom: 15px;
+    font-family: "JetBrains Mono";
+    font-size: medium;
+    width: 75%;
+    justify-content: space-between;
+  }
+  .product-hero-button-container button {
+    width: 100%;
+    height: 40px;
+    font-family: "JetBrains Mono";
+    font-size: 25px;
+    margin-top: 20px;
+  }
+  .product-hero-button-container {
+    width: 100%;
+  }
+}
+@media (min-width: 1024px) {
+  #product-name {
+    font-size: xx-large;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-price {
+    font-size: x-large;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-info {
+    font-family: "JetBrains Mono";
+    font-size: x-large;
+    margin-bottom: 15px;
+  }
+  #product-info-details {
+    font-family: "JetBrains Mono";
+    font-size: medium;
+    line-height: 1.8;
+  }
+  #product-unit-price {
+    font-size: x-large;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-size {
+    font-size: x-large;
+    margin-bottom: 15px;
+    font-family: "JetBrains Mono";
+  }
+  .product-size-selector-container {
+    display: flex;
+    margin-bottom: 15px;
+    font-family: "JetBrains Mono";
+    font-size: large;
+    width: 75%;
+    justify-content: space-between;
+  }
+  .product-hero-button-container button {
+    width: 100%;
+    height: 40px;
+    font-family: "JetBrains Mono";
+    font-size: 25px;
+    margin-top: 20px;
+  }
+  .product-hero-button-container {
+    width: 100%;
+  }
+}
+@media (min-width: 1600px) {
+  #product-name {
+    font-size: xx-large;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-price {
+    font-size: xx-large;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-info {
+    font-family: "JetBrains Mono";
+    font-size: xx-large;
+    margin-bottom: 15px;
+  }
+  #product-info-details {
+    font-family: "JetBrains Mono";
+    font-size: x-large;
+    line-height: 1.8;
+  }
+  #product-unit-price {
+    font-size: x-large;
+    margin-bottom: 5px;
+    font-family: "JetBrains Mono";
+  }
+  #product-size {
+    font-size: xx-large;
+    margin-bottom: 15px;
+    font-family: "JetBrains Mono";
+  }
+  .product-size-selector-container {
+    display: flex;
+    margin-bottom: 15px;
+    font-family: "JetBrains Mono";
+    font-size: x-large;
+    width: 75%;
+    justify-content: space-between;
+  }
+  .product-hero-button-container button {
+    width: 100%;
+    height: 60px;
+    font-family: "JetBrains Mono";
+    font-size: 25px;
+    margin-top: 20px;
+  }
+  .product-hero-button-container {
+    width: 100%;
+  }
+}/*# sourceMappingURL=productpage.css.map */

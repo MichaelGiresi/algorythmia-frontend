@@ -1,48 +1,157 @@
+BUGS:
+
+        HOME PAGE:
+
+                -- Price in hero is not dynamic
+
+        FOOTER:
+
+                -- Text needs to be bigger
+                -- shop all link doesnt work
+
+        SHOPALL:
+
+                -- Prices and titles arent dynamic
+
+        SUBTOTAL CART:
+
+                -- Dynamic images
+                -- Have check for multiple items include size, not only id
+                -- have cart morph into increment like amazon application
+                -- have cart increment in nav reflect total amount of items in cart
+                -- dynamic titles
+                -- dynamic Prices
+                -- dynamic in stock status
+                -- remove button removes item and quantity listed
+                -- Have your cart is empty only appear when cart is empty
+                -- store all variables of cart in local storage
+                -- figure out how to store individual quanities of items in variable
+                
+
 TODO:
+
+
 
 
     
 
-DONE!        -- Create Database - Create tables for products, product category, reviews, customers, cart state, orders, country codes, state codes users
-DONE!        -- Create backend using Java and spring boot to communicate between database and react
-DONE!        -- Implement fetch api in react for database
-        -- Refactor HTML to utilize props
-        -- Create product page
+        DONE!        -- Create Database - Create tables for products, product category, reviews, customers, cart state, orders, country codes, state codes users
+        
+        DONE!        -- Create backend using Java and spring boot to communicate between database and react
+
+        DONE!        -- Implement fetch api in react for database
+
+        DONE!        -- Refactor HTML to utilize props
+
+        DONE!        -- Migrate project from JS to TS
+
+        DONE!        -- Create product page
+
         -- Create checkout page
+
         -- Implement authentication + authorization with okta
-        -- Create true cart state, and be able to purchase items and push the order to the database
+
+        -- Create cart state
+
+        -- have checkout log order to database and increment units in stock 
+        
+        -- Commmunicate with stripe
+
         -- Create Admin page, where the admin can create, remove and change quantity of products and read orders
-        -- implement stripe to accept payment processing
-        -- deploy the database and java backend to the cloud
-         -- deploy the front end to netlifly
+
+        -- deploy the database, springboot and front end
 
 
 
 
 // devlog
 
+---- Goals for Saturday, April 8th
 
---- April 1st
+        -- Deploy Database, front end and springboot
+
+---- Goals for Friday, April 7th
+
+        -- Have order be communicated to stripe
+
+        -- Clean up Code for deployment
+
+        -- Handle ssh key for springboot
+
+---- Goals for Thursday, April 6th
+
+        -- Have checkout manipulate the database
+
+        -- Implement Authentication + Authorization with okta
+
+        -- Create Admin Page with functionality
 
 
-        -- Downloaded Algorythmia from Github, havent updated the project in 7 months.
+---- Goals for Wednesday, April 5th
 
-        -- Created a full database regarding all functionality for the site
+        -- Have product page update cart
 
-        -- Created a spring book application to create a backend server for communication between react and mysql
-
-        -- Tested the api successfully. React, spring boot, and mysql are communicating.
+        -- Create checkout page that includes items in cart
 
 
+---- Goals for Tuesday, April 4th
+
+        DONE!        -- (Didn't get to it on the 2nd or 3rd) finish product page and have it download information dynamically from the server.
+
+        DONE!        -- Refactor App.tsx to have nav and footer in their own component
+
+        -- Have product page update cart
+
+        -- Create checkout page that includes items in cart
 
 
+---- Goals for Monday, April 3rd
+
+        DONE!        -- Fix SCSS errors from migration from js to ts
+
+        DONE!        -- Add customer id to shipping and billing tables
+
+        DONE!        -- Refactor orders table to have different sizes as columns, not one column as a primary key 
+
+        DONE!        -- (Didn't get to it on the 2nd) Be able to click each product and bring it to a specific product page
+
+        -- (Didn't get to it on the 2nd) finish product page and have it download information dynamically from the server.
+
+        -- Have product page update cart
+
+        -- Create checkout page that includes items in cart, updates database, and communicates with stripe
+
+        
 
 ---- Goals for April 2nd
 
-        -- upload images to hosting site, or convert them to blobs, and have them be loaded in from the database. Implement this on Hero, Upcomming, All Products
+        DONE!        -- Migrate product from JS to TS
 
-        -- Figure out how to dynamically create product pages for each product. Be able to click each product and bring it to a specific product page
+        DONE!        -- upload images to hosting site, or convert them to blobs, and have them be loaded in from the database. 
+        
+        DONE!        -- Implement images in Hero, Upcomming, All Products
+
+        DONE!        -- Figure out how to dynamically create product pages for each product. 
+        
+        -- Be able to click each product and bring it to a specific product page
 
         -- create product page and have it upload information dynamically to the server.
 
-        -- Figure out a solution for sizes of clothing. Should I add a new column, or just implement it into one of the already existing columns
+        DONE!        -- Figure out a solution for sizes of clothing. Should I add a new column, or just implement it into one of the already existing columns
+
+
+---- Goals for April 1st
+
+
+        DONE!        -- Downloaded Algorythmia from Github, havent updated the project in 7 months.
+
+        DONE!        -- Created a full database regarding all functionality for the site
+
+        DONE!        -- Created a spring book application to create a backend server for communication between react and mysql
+
+        DONE!        -- Tested the api successfully. React, spring boot, and mysql are communicating.
+
+
+
+
+
