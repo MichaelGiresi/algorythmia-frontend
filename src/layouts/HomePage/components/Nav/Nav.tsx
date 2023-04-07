@@ -21,189 +21,137 @@ import { CartContext } from "../../../../Contexts/CartContext"
 
 // The primary question is:
 
-        // Can we update the cart from the product page selected elements? This has to be done from the product page.
+// Can we update the cart from the product page selected elements? This has to be done from the product page.
 
 
 
 
 const Nav = () => {
-
   const cartContext = useContext(CartContext)
-
-  
-
-
 
   const Hamburger = () => {
     const hamburgerId = document.getElementById('hamburgerId')
     const hamburgerButton = document.getElementById('hamburger-button')
-    const html = document.getElementById('algo__html');
+    const html = document.documentElement;
+    const body = document.body
 
     if (cartContext?.hamburger) {
       cartContext?.setHamburger(false)
       hamburgerId.classList.toggle('open')
-      // html.classList.remove('stop-scrolling')
+      body.classList.remove('hidden');
+      html.classList.remove('hidden');
 
     } else {
       cartContext?.setHamburger(true)
       hamburgerId.classList.toggle('open')
-      // html.classList.add('stop-scrolling')
+      body.classList.add('hidden');
+      html.classList.add('hidden');
+
     }
-  }
-
-  // const HamburgerCart = () => {
-  //   const hamburgerId = document.getElementById('hamburgerId')
-  //   const cartId = document.getElementById('cartId')
-  //   const html = document.getElementById('algo__html');
-
-  //   if (HamburgerCart) {
-
-  //     hamburgerId.classList.toggle('open')
-  //     cartId.classList.toggle('open')
-  //     // html.classList.add('stop-scrolling')
-  //   }
-  // }
-
-  const HamburgerAbout = () => {
-    const hamburgerId = document.getElementById('hamburgerId')
-    const aboutPage = document.getElementById('about-page')
-
-    hamburgerId.classList.toggle('open')
-    aboutPage.classList.toggle('show')
   }
 
   const aboutPage = () => {
+    const hamburgerId = document.getElementById('hamburgerId')
     const aboutPage = document.getElementById('about-page')
-
+    const html = document.documentElement;
+    const body = document.body
     if (cartContext?.about) {
       cartContext?.setAbout(false)
+      cartContext?.setHamburger(false)
       aboutPage.classList.toggle('show')
       console.log(cartContext?.about)
       document.body.style.position = ''
+      body.classList.remove('hidden');
+      html.classList.remove('hidden');
 
     } else {
       cartContext?.setAbout(true)
+      cartContext?.setHamburger(true)
+      hamburgerId.classList.remove('open')
       aboutPage.classList.toggle('show')
-      document.body.style.position = 'fixed'
-      document.body.style.right = '0'
-      document.body.style.top = '0'
-      document.body.style.bottom = '0'
-      document.body.style.left = '0'
-      document.body.style.margin = 'auto'
       console.log(cartContext?.about)
+      body.classList.add('hidden');
+      html.classList.add('hidden');
     }
   }
 
-  useEffect(() => {
+  const cartRemove = (indexToRemove) => {
+    console.log(indexToRemove)
 
-    if(cartContext?.localCartItems.length  !== 0) {
-
-      const cartRemoveCounter = document.getElementById('cart-increment-remove')
-      const cartProductInfo = document.getElementById('cart-product-info-id')
-      const cartSubtotal = document.getElementById('cart-subtotal-id')
-      const cartPromo = document.getElementById('cart-promo-continue-id')
-      const cartPayChoice = document.getElementById('cart-pay-choice-id')
-      const cartMaster = document.getElementById('cartId')
-      
-      if(cartContext?.cartCount === 1) {
-        cartRemoveCounter.style.padding ='0px'
-      } 
-      else {
-        cartRemoveCounter.style.marginTop ='-2px'
-        cartRemoveCounter.style.padding =''
-      }
-      
-      if(cartContext?.cartCount === 0) {
-    cartProductInfo.style.display ='none'
-    cartSubtotal.style.display ='none'
-    cartPromo.style.display ='none'
-    cartPayChoice.style.display ='none'
-    const empty = document.createElement('h1')
-    empty.style.color = 'white'
-    empty.style.fontFamily = 'JetBrains Mono'
-    empty.style.textAlign = 'center'
-    // empty.innerHTML = 'Your Cart is Empty!'
-    cartMaster.appendChild(empty)
+    cartContext?.setCartCount(cartContext?.localCartItems[indexToRemove][4] - cartContext?.cartCount)
+    cartContext?.setLocalCartItems(cartContext?.localCartItems.filter((_, index) => index !== indexToRemove));
   }
-}
-},[cartContext?.cartCount, cartContext?.localCartItems])
 
-const cartRemove = (index) => {
-  console.log(index)
-  const newCart = cartContext?.localCartItems.splice(index, 1)
-  cartContext?.setLocalCartItems(newCart)
+  const Cart = () => {
+    const cartId = document.getElementById('cartId')
+    const cartButton = document.getElementById('cart-button')
+    const cartOverlay = document.getElementById('cart-left-overlay-id')
+    const html = document.documentElement;
+    const body = document.body
 
-
-  
-}
- const Cart = () => {
-  const cartId = document.getElementById('cartId')
-  const cartButton = document.getElementById('cart-button')
-  const cartOverlay = document.getElementById('cart-left-overlay-id')
-  const html = document.getElementById('algo__html'); 
-  
-  if(cartContext?.cart) {
-    cartContext?.setCart(false) 
-    cartId.classList.toggle('open')
-    cartOverlay.classList.toggle('open')
-    console.log(cartContext?.cart)
-    html.classList.remove('stop-scrolling')
-  } else {
-    cartContext?.setCart(true) 
-    cartId.classList.toggle('open')
-    cartOverlay.classList.toggle('open')
-    console.log(cartContext?.cart)
-    // html.classList.add('stop-scrolling')
+    if (cartContext?.cart) {
+      cartContext?.setCart(false)
+      cartId.classList.toggle('open')
+      cartOverlay.classList.toggle('open')
+      console.log(cartContext?.cart)
+      body.classList.remove('hidden');
+      html.classList.remove('hidden');
+    } else {
+      cartContext?.setCart(true)
+      cartId.classList.toggle('open')
+      cartOverlay.classList.toggle('open')
+      body.classList.add('hidden');
+      html.classList.add('hidden');
+    }
   }
-}
 
   const cartExit = () => {
     const cartId = document.getElementById('cartId')
     const cartOverlay = document.getElementById('cart-left-overlay-id')
-    const html = document.getElementById('algo__html');
+    const html = document.documentElement;
+    const body = document.body
     cartContext?.setCart(false)
     cartContext?.setHamburger(false)
     cartId.classList.remove('open')
     cartOverlay.classList.remove('open')
+    body.classList.remove('hidden');
+    html.classList.remove('hidden');
     // html.classList.remove('stop-scrolling')
   }
-
 
   const HamburgerCart = () => {
     const hamburgerId = document.getElementById('hamburgerId')
     const cartId = document.getElementById('cartId')
     const html = document.getElementById('algo__html');
 
-    if(HamburgerCart) {
+    if (HamburgerCart) {
 
       hamburgerId.classList.toggle('open')
-      cartId.classList.toggle('open') 
-      // html.classList.add('stop-scrolling')
+      cartId.classList.toggle('open')
+
     }
   }
 
-// const [cartItemsLocal, setCartItemsLocal] = useState([]);
+  useEffect(() => {
+    // let cartQuantityTotal = 0
+    let a = 0
+    let b = 0
+    for(let i = 0; i < cartContext?.localCartItems.length; i++) {
+      
+      // cartContext?.setCartCount(0)
+      a += cartContext?.localCartItems[i][4]
+      b += cartContext?.localCartItems[i][5] * cartContext?.localCartItems[i][4] 
 
-
-// const addItemToCart = (item) => {
-//   setCartItemsLocal([...cartItemsLocal, item]);
-// };
-
-
-// const removeItemFromCart = (item) => {
-//   const newCartItems = cartItemsLocal.filter((cartItem) => cartItem.id !== item.id);
-//   setCartItemsLocal(newCartItems);
-// };
-
-
-// const getTotalCost = () => {
-//   const totalCost = cartItemsLocal.reduce((accumulator, currentItem) => accumulator + currentItem.price, 0);
-//   return totalCost;
-// };
+      console.log(cartContext?.cartCount)
+      
+    }
+    cartContext?.setCartCount(a)
+    cartContext?.setCartSubTotal(b)
+  }, [cartContext?.localCartItems])
 
   return (
     <div className='nav'>
-      
+
       {/* About Page */}
       <div id="about-page" className="about-container" onClick={() => { aboutPage() }}>
         <div className="about-info-container">
@@ -225,97 +173,125 @@ const cartRemove = (index) => {
         </div>
         <div id="hamburgerId">
           <button id="hamburger-button" className="hamburger-exit" onClick={() => { Hamburger() }}>X</button>
-          <div className="hamburger-about" onClick={() => { HamburgerAbout() }} >About Page</div>
+          <div className="hamburger-about" onClick={() => { aboutPage() }} >About Page</div>
           <a href="/shopall" className="hamburger-shopall">Shop All</a>
           <div className="hamburger-cart" onClick={() => { HamburgerCart() }}>Cart ({cartContext?.cartCount})</div>
-          
+
         </div>
-      {/* Hamburger End */}
+        {/* Hamburger End */}
 
         {/* Nav Links */}
         <div className='links-container'>
           <Link to={'/shopall'} className="shopall">SHOP ALL</Link>
           <div id="about" className='about' onClick={() => { aboutPage() }}>ABOUT</div>
-          <div className='cart' onClick={() => {Cart()}}>CART ({cartContext?.cartCount})</div>
+          <div className='cart' onClick={() => { Cart() }}>CART ({cartContext?.cartCount})</div>
         </div>
       </div>
       <div className='divider'></div>
 
 
 
-    {/* DESKTOP CART */}
+      {/* DESKTOP CART */}
       <div className="cart-parent">
-  <div className="cart-left-overlay" id="cart-left-overlay-id" onClick={() => {cartExit()}}>CART</div>
-  <div id="cartId" className="cart-container" > 
-    <div className="cart-button-container">
-      <button id="cart-button" className="cart-exit" onClick={() => {cartExit()}}>X</button>
-    </div>
+        <div className="cart-left-overlay" id="cart-left-overlay-id" onClick={() => { Cart() }}>CART {cartContext?.cartCount} </div>
+        <div id="cartId" className="cart-container" >
+          <div className="cart-button-container">
+            <button id="cart-button" className="cart-exit" onClick={() => { cartExit() }}>X</button>
+          </div>
 
 
-{/*  */}
-{/*  */}
-{/*  */}
-{/*  */}
-{/* CART MAP START */}
+          {/*  */}
+          {/*  */}
+          {/*  */}
+          {/*  */}
+          {/* CART MAP START */}
 
-    // individual quantity for each item
+          {cartContext?.localCartItems.map((e, index) => (
+
+            <div key={index} id="cart-product-info-id" className="cart-product-info-container">
+              <div>
+                <img id="testttt" src={cartContext?.localCartItems[index][2]} className="cart-product-image" />
+
+                {/* Item Increment */}
+                <div className="cart-product-increment">
+                  <div id="cart-increment-remove" onClick={() => {
+                    const newQuantity = cartContext?.localCartItems[index][4] - 1;
+                    cartContext?.setLocalCartItems(prevCartItems => {
+                      const newCartItems = [...prevCartItems];
+                      newCartItems[index][4] = newQuantity;
+                      if(newQuantity === 0) {
+                        cartRemove(index)
+                      }
+                      
+                      return newCartItems;
+                    })}}>{cartContext?.localCartItems[index][4] < 2 ? <img src={can} width={'25px'} height={'25px'} /> : "-"}</div>
+                  <div id="cart-increment">{cartContext?.localCartItems[index][4]}</div>
+                  <div id="cart-increment-remove" onClick={() => {
+                    const newQuantity = cartContext?.localCartItems[index][4] + 1;
+                    cartContext?.setLocalCartItems(prevCartItems => {
+                      const newCartItems = [...prevCartItems];
+                      newCartItems[index][4] = newQuantity;
+                      return newCartItems;
+                    });
+                  }}>+</div>
+                </div>
+                {/* Item Increment End */}
+
+              </div>
+              <div className="cart-product-info-increment-wrapper">
+                <div className="cart-product-info">
+
+                  {/* Product Name */}
+                  <h6>{cartContext?.localCartItems[index][1]}</h6>
+
+                  {/* Product Size */}
+                  <h5>({cartContext?.localCartItems[index][3]})</h5>
+
+                  {/* Product Price */}
+                  <h6>{`$${cartContext?.localCartItems[index][5]}`}</h6>
+
+                  {/* Product In Stock */}
+                  {/* {cartContext?.localCartItems[index].active ? <h5>In Stock</h5> : <h5>Out of Stock</h5> } */}
+                  {/* Remove Button */}
+                  <button className="cart-product-remove-button" id="cart-product-remove" onClick={() => { cartRemove(index) }}>REMOVE</button>
+                </div>
+                {/* <div className="cart-product-increment-laptop">
+                  <button id="cart-increment-remove" onClick={() => { cartContext?.setCartCount(cartContext?.cartCount - 1) }}>-</button>
+                  <div id="cart-increment">{cartContext?.localCartItems[index][4]}</div>
+                  <button id="cart-increment-add" onClick={() => { cartContext?.setCartCount(cartContext?.cartCount + 1) }}>+</button>
+                </div> */}
+              </div>
+            </div>
+
+          ))}
+
+          {/* CART MAP END */}
+          {/*  */}
+          {/*  */}
+          {/*  */}
+          {/*  */}
 
 
-    {cartContext?.localCartItems.map((e, index) => (
-
-      <div id="cart-product-info-id" className="cart-product-info-container">
-      <div>
-        <img id="testttt"  src={cartContext?.localCartItems[index].imageUrl} className="cart-product-image"/>
-        <div className="cart-product-increment">
-          <div id="cart-increment-remove" onClick={() => {cartContext?.setCartCount(cartContext?.cartCount - 1)}}>{cartContext?.cartCount < 2? <img  src={can} width={'25px'} height={'25px'}/> : "-" }</div>
-          <div id="cart-increment">{cartContext?.cartCount}</div>
-          <button id="cart-increment-add" onClick={() => {cartContext?.setCartCount(cartContext?.cartCount + 1)}}>+</button>
+          <div id="cart-subtotal-id" className="cart-subtotal-container">
+            <div className="cart-subtotal">Subtotal</div>
+            <div className="cart-value">{`$${cartContext?.cartSubTotal}`}</div>
+          </div>
+          <div id="cart-promo-continue-id" className="cart-promo-continue-container">
+            <div className="cart-promo-title">Add Promo Code</div>
+            <input className="cart-promo-input" placeholder="Enter your code"></input>
+            <button className="cart-continue">Continue to Checkout</button>
+          </div>
+          <div id="cart-pay-choice-id" className="cart-pay-choice-container">
+            <h1>Payment Methods</h1>
+            <button className="cart-pay" id="cart-pay-paypal">Pay Pal</button>
+            <button className="cart-pay" id="cart-pay-apple">Apple Pay</button>
+            <button className="cart-pay" id="cart-pay-amazon">Amazon Pay</button>
+          </div>
         </div>
       </div>
-      <div className="cart-product-info-increment-wrapper">
-        <div className="cart-product-info">
-          <h3>{cartContext?.localCartItems[index].name}</h3>
-          <h6>{cartContext?.localCartItems[index].unitPrice}</h6>
-          {cartContext?.localCartItems[index].active ? <h6>In Stock</h6> : <h6>Out of Stock</h6> }
-          <button className="cart-product-remove-button" id="cart-product-remove" onClick={() => {cartRemove(cartContext?.localCartItems[index].id)}}>REMOVE</button>
-        </div>
-        <div className="cart-product-increment-laptop">
-          <button id="cart-increment-remove" onClick={() => {cartContext?.setCartCount(cartContext?.cartCount - 1)}}>-</button>
-          <div id="cart-increment">{cartContext?.cartCount}</div>
-          <button id="cart-increment-add" onClick={() => {cartContext?.setCartCount(cartContext?.cartCount + 1)}}>+</button>
-        </div>
-      </div>
-    </div>
-
-    ))}
-
-{/* CART MAP END */}
-{/*  */}
-{/*  */}
-{/*  */}
-{/*  */}
 
 
-    <div id="cart-subtotal-id" className="cart-subtotal-container">
-      <div className="cart-subtotal">Subtotal</div>
-      <div className="cart-value">{`$${cartContext?.cartCount * 12}`}</div>
-    </div>
-    <div id="cart-promo-continue-id" className="cart-promo-continue-container">
-      <div className="cart-promo-title">Add Promo Code</div>
-      <input className="cart-promo-input" placeholder="Enter your code"></input>
-      <button className="cart-continue">Continue to Checkout</button>
-    </div>
-    <div id="cart-pay-choice-id" className="cart-pay-choice-container">
-      <h1>Payment Methods</h1>
-      <button className="cart-pay" id="cart-pay-paypal">Pay Pal</button>
-      <button className="cart-pay" id="cart-pay-apple">Apple Pay</button>
-      <button className="cart-pay" id="cart-pay-amazon">Amazon Pay</button>
-    </div>
-  </div>
-</div>
 
-
-      
     </div>
   )
 }

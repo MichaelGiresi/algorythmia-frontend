@@ -1,6 +1,6 @@
 html {
   background-color: black;
-  overflow-x: hidden;
+  /* overflow: hidden; */
 }
 
 body {
@@ -11,7 +11,11 @@ body {
     position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow: auto;
+}
+
+.hidden {
+  overflow: hidden;
 }
 
 body::-webkit-scrollbar {

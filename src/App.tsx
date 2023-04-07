@@ -26,6 +26,7 @@ function App() {
     const storedCartItems = localStorage.getItem('localCartItems')
     return storedCartItems ? JSON.parse(storedCartItems) : []
   })
+
   const [hamburger, setHamburger] = useState(false)
   const [about, setAbout] = useState(false)
 
@@ -33,6 +34,11 @@ function App() {
   const storedCartCount = localStorage.getItem('cartCount');
   return storedCartCount ? JSON.parse(storedCartCount) : []
   })
+
+  const [cartSubTotal, setCartSubTotal] = useState(() => {
+    const cartSubTotal= localStorage.getItem('cartSubTotal');
+    return cartSubTotal ? JSON.parse(cartSubTotal) : []
+    })
 
   const [cart, setCart] = useState(false)
   
@@ -49,6 +55,7 @@ function App() {
                             cartCount, setCartCount,
                             about, setAbout,
                             cart, setCart,
+                            cartSubTotal, setCartSubTotal,
                             localCartItems, setLocalCartItems}}>
         <Nav />
         <Switch>

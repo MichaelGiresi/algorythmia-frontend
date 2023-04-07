@@ -15,17 +15,15 @@ BUGS:
 
         SUBTOTAL CART:
 
-                -- Dynamic images
-                -- Have check for multiple items include size, not only id
-                -- have cart morph into increment like amazon application
-                -- have cart increment in nav reflect total amount of items in cart
-                -- dynamic titles
-                -- dynamic Prices
-                -- dynamic in stock status
-                -- remove button removes item and quantity listed
-                -- Have your cart is empty only appear when cart is empty
-                -- store all variables of cart in local storage
-                -- figure out how to store individual quanities of items in variable
+        DONE!        -- Dynamic images
+        DONE!        -- Have check for multiple items include size, not only id
+        DONE!        -- have cart morph into increment like amazon application
+        DONE!        -- have cart increment in nav reflect total amount of items in cart
+        DONE!        -- dynamic titles
+        DONE!        -- dynamic Prices
+        DONE!        -- remove button removes item and quantity listed
+        DONE!        -- store all variables of cart in local storage
+        DONE!        -- figure out how to store individual quanities of items in variable
                 
 
 TODO:
@@ -51,7 +49,7 @@ TODO:
 
         -- Implement authentication + authorization with okta
 
-        -- Create cart state
+        DONE!        -- Create cart state
 
         -- have checkout log order to database and increment units in stock 
         
@@ -85,6 +83,10 @@ TODO:
         -- Implement Authentication + Authorization with okta
 
         -- Create Admin Page with functionality
+
+        DONE!(3rd day)        -- Have product page update cart
+
+        -- Create checkout page that includes items in cart
 
 
 ---- Goals for Wednesday, April 5th
