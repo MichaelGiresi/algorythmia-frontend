@@ -8,7 +8,8 @@ type CartContextTypes = {
     about: boolean, setAbout: React.Dispatch<React.SetStateAction<boolean>>,
     cartCount:number, setCartCount: React.Dispatch<React.SetStateAction<number>>,
     cart:boolean, setCart:React.Dispatch<React.SetStateAction<boolean>>,
-    localCartItems: any[], setLocalCartItems: React.Dispatch<React.SetStateAction<any[]>>
+    localCartItems: any[], setLocalCartItems: React.Dispatch<React.SetStateAction<any[]>>,
+    cartSubTotal: number, setCartSubTotal: React.Dispatch<any>
 }
 
 

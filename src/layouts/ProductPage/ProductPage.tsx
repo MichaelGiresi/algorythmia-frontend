@@ -14,7 +14,7 @@ export const ProductPage = (props) => {
 
     const cartContext = useContext(CartContext)
     const [product, setProduct] = useState<ProductModel>()
-    const [cartState, setCartState] = useState(['cartState'])
+    const [cartState, setCartState] = useState([])
     const [orders, setOrders] = useState<OrderModel>()
     const [products, setProducts] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +24,8 @@ export const ProductPage = (props) => {
     
     const productId = (window.location.pathname).split('/')[2];
     const restOfProducts = []
-  
+    let itemQuantity = 1
+
     // Fetch Product
     useEffect(() => {
   
@@ -105,8 +106,11 @@ export const ProductPage = (props) => {
         }
     }
     useEffect(() => {
-        
-    })
+        console.log('------- CART STATUS ------')
+        console.log(cartContext?.localCartItems)
+        console.log('--------------------------')
+
+    }, [cartContext?.localCartItems])
     
     const handleProductChange = (e: any) => {
         // setProductSize(0)
@@ -119,32 +123,45 @@ export const ProductPage = (props) => {
 
 
         const addToCart = (product, productSize) => {
-            // console.log(`product size when hitting addToCart ${productSize}`)
+            
+
+            // Checks to see if size is selected
+
             if(productSize < 1) {
                 const btn = document.getElementById('product-add-to-cart-button')
-                // console.log("Product size equals Fukcing 0")
                 btn.innerText = 'Please Select A Size'
+
             } else {
-                console.log(`Product Size ${productSize}`)
                 
+                // Checks to see if localCartItems array is empty
+
                 if(cartContext?.localCartItems.length === 0){
-                    cartContext?.setLocalCartItems([...cartContext?.localCartItems, product, productSize])
+                    
+                    cartContext?.setLocalCartItems([[product.id, product.name, product.imageUrl, productSize, itemQuantity, product.unitPrice, product.sku, product.description, product.active]])
                     
                 } else {
+
+                    // Loops through existing elements in localCartItems and checks if the id's and product sizes are already in the localCartItems array.
+
                     let a = false
                     for(let i = 0; i < cartContext?.localCartItems.length; i++) {
-                        console.log(cartContext?.localCartItems[i].id)
-                        if(cartContext?.localCartItems[i].id == product.id) {
+
+                        if(cartContext?.localCartItems[i][0] === product.id && cartContext?.localCartItems[i][3] === productSize) {
+
                             a = true
-                            // console.log(a)
-                            console.log('Already in Cart')
+                            const btn = document.getElementById('product-add-to-cart-button')
+                            btn.innerText = 'Already Added to Cart'
                             break
                         }
                     }
+
                     if(a === false) {
-                        cartContext?.setLocalCartItems([...cartContext?.localCartItems, product, productSize])
-                        console.log('Added to Cart')
+                        
+                        cartContext?.setLocalCartItems([...cartContext?.localCartItems, [product.id, product.name, product.imageUrl, productSize, itemQuantity, product.unitPrice, product.sku, product.description, product.active]])
+                        const btn = document.getElementById('product-add-to-cart-button')
+                        btn.innerText = 'Added to Cart!'
                         console.log(cartContext?.localCartItems)
+                         
                     }
                 }
             }
@@ -170,11 +187,11 @@ export const ProductPage = (props) => {
                         <div id='product-size'>SELECT SIZE:</div>
                         <select value={productSize} onChange={handleProductChange}  className='product-size-selector-container'>
                              <option value={0} id='product-size-select'>Select</option>
-                            <option value={1} id='product-size-small'>Small</option>
-                            <option value={2} id='product-size-medium'>Medium</option>
-                            <option value={3} id='product-size-large'>Large</option>
-                            <option value={4} id='product-size-extralarge'>Extra Large</option>
-                            <option value={5} id='product-size-extraextralarge'>Extra Extra Large</option>
+                            <option value={'Size: S'} id='product-size-small'>Small</option>
+                            <option value={'Size: M'} id='product-size-medium'>Medium</option>
+                            <option value={'Size: L'} id='product-size-large'>Large</option>
+                            <option value={'Size: XL'} id='product-size-extralarge'>Extra Large</option>
+                            <option value={'Size: XXL'} id='product-size-extraextralarge'>Extra Extra Large</option>
                         </select>
                     </div>
                     <div className='product-hero-info-container'>
@@ -183,6 +200,7 @@ export const ProductPage = (props) => {
                     </div>
                     <div className='product-hero-button-container'>
                         <button onClick={() => {addToCart(product, productSize)}} id='product-add-to-cart-button'>ADD TO CART</button>
+                        <button onClick={() => {cartContext?.setLocalCartItems([])}}>Temporary wipe cart button</button>
                     </div>
                 {/* </div> */}
             </div>
