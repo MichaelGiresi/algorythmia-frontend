@@ -24,6 +24,16 @@ BUGS:
         DONE!        -- remove button removes item and quantity listed
         DONE!        -- store all variables of cart in local storage
         DONE!        -- figure out how to store individual quanities of items in variable
+
+        CHECKOUT PAGE:
+
+                -- Inputs need a lot of work, specifically type definitions and understanding of how inputs will be collected
+                -- Input checks to make sure the correct format is included
+                -- place order check to make sure we are accepting cards that we actually accept.
+                -- Figure out how information collected will be stored in an array
+                -- make checkbox copy information that is already included in shipping information
+                -- Make a post request to the server, and then to the database.
+
                 
 
 TODO:
@@ -68,13 +78,17 @@ TODO:
 
         -- Deploy Database, front end and springboot
 
----- Goals for Friday, April 7th
-
         -- Have order be communicated to stripe
 
         -- Clean up Code for deployment
 
         -- Handle ssh key for springboot
+
+---- Goals for Friday, April 7th
+
+        -- Create checkout page that includes items in cart
+
+        -- Have checkout manipulate the database
 
 ---- Goals for Thursday, April 6th
 
@@ -85,8 +99,6 @@ TODO:
         -- Create Admin Page with functionality
 
         DONE!(3rd day)        -- Have product page update cart
-
-        -- Create checkout page that includes items in cart
 
 
 ---- Goals for Wednesday, April 5th

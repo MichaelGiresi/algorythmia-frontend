@@ -195,6 +195,9 @@
   border-radius: 8px;
   border: none;
   margin-bottom: 15px;
+  text-decoration: none;
+  color: black;
+  letter-spacing: 3px;
   cursor: pointer;
 }
 

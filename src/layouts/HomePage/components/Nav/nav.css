@@ -28,7 +28,7 @@
 
 .links-container {
   display: none;
-  width: 387px;
+  width: 500px;
   justify-content: space-between;
   color: white;
   font-size: 20px;
@@ -38,7 +38,7 @@
 }
 @media (min-width: 425px) {
   .links-container {
-    width: 357px;
+    width: 500px;
   }
 }
 @media (min-width: 768px) {
@@ -168,4 +168,11 @@
   margin-right: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.nav-login {
+  color: #c3c3c3;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 2px;
 }/*# sourceMappingURL=nav.css.map */

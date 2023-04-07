@@ -1,10 +1,7 @@
-// import Hero from "./layouts/HomePage/components/Hero/Hero";
-// import Upcomming from "./layouts/HomePage/components/Upcomming/Upcomming";
 import HomeOutput from "./layouts/HomePage/HomeOutput";
-import { BrowserRouter as Router, Route, Link, Switch, Redirect,  } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch, Redirect, useHistory } from 'react-router-dom'
 import ShopAll from "./layouts/ShopAllPage/ShopAll";
 import Error from "./Error"
-// import Product from "./layouts/ProductPage/ProductPage";
 import { useState, useEffect, useRef } from 'react'
 import sheepimg1 from './assets/FollowTheLeaderPoster.jpeg'
 import can from './assets/can.png'
@@ -18,10 +15,28 @@ import Footer from "./layouts/HomePage/components/Footer/Footer";
 import Hero from "./layouts/HomePage/components/Hero/Hero";
 import Upcomming from "./layouts/HomePage/components/Upcomming/Upcomming";
 import { CartContext } from "./Contexts/CartContext";
+import Checkout from "./layouts/Checkout/Checkout";
+import { oktaConfig } from "./lib/oktaConfig";
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js'
+import { Security, LoginCallback, SecureRoute } from '@okta/okta-react'
+import LoginWidget from "./Auth/LoginWidget";
+import { ManageProductsPage } from "./layouts/ManageProductsPage/ManageProductsPage";
 
-
+const oktaAuth = new OktaAuth(oktaConfig)
 
 function App() {
+
+  const customAuthHandler = () => {
+    history.push('/login')
+  }
+
+  const history = useHistory();
+
+  const restoreOriginalUri = async (_oktaAuth: any, originalUri: any) => {
+    history.replace(toRelativeUrl(originalUri || '/', window.location.origin))
+  }
+
+
   const [localCartItems, setLocalCartItems] = useState(() => {
     const storedCartItems = localStorage.getItem('localCartItems')
     return storedCartItems ? JSON.parse(storedCartItems) : []
@@ -49,22 +64,26 @@ function App() {
   return (
     <div>
 
+        <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri} onAuthRequired={customAuthHandler}> 
       <Router>
       <CartContext.Provider value={{
-                            hamburger, setHamburger,
-                            cartCount, setCartCount,
-                            about, setAbout,
-                            cart, setCart,
-                            cartSubTotal, setCartSubTotal,
-                            localCartItems, setLocalCartItems}}>
+        hamburger, setHamburger,
+        cartCount, setCartCount,
+        about, setAbout,
+        cart, setCart,
+        cartSubTotal, setCartSubTotal,
+        localCartItems, setLocalCartItems}}>
         <Nav />
         <Switch>
           <Route path="/shopall">
             <ShopAll />
           </Route>
+          <Route path='/login' render={() => <LoginWidget config={oktaConfig}/>}/>
           <Route path="/productpage/:productId">
             <ProductPage />
           </Route>
+          <Route path="/checkout"><Checkout/></Route>
+      <SecureRoute path='/admin'><ManageProductsPage/></SecureRoute>
           <Route path="/">
             <Hero />
             <Upcomming />
@@ -72,7 +91,9 @@ function App() {
         </Switch>
         <Footer />
       </CartContext.Provider>
+      <Route path='/login/callback' component={LoginCallback} />
       </Router>
+                              </Security>
     </div>
   );
 }

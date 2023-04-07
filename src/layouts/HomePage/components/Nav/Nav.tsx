@@ -4,6 +4,9 @@ import { useState, useEffect, useContext, useRef } from "react"
 import '../../../Cart/cart.scss'
 import can from '../../../../assets/can.png'
 import { CartContext } from "../../../../Contexts/CartContext"
+import Checkout from "../../../Checkout/Checkout"
+import { useOktaAuth } from '@okta/okta-react'
+import Error from "../../../../Error"
 
 
 
@@ -27,6 +30,7 @@ import { CartContext } from "../../../../Contexts/CartContext"
 
 
 const Nav = () => {
+  const { oktaAuth, authState } = useOktaAuth();
   const cartContext = useContext(CartContext)
 
   const Hamburger = () => {
@@ -149,6 +153,12 @@ const Nav = () => {
     cartContext?.setCartSubTotal(b)
   }, [cartContext?.localCartItems])
 
+  if(!authState) {
+    return <Error/>
+  }
+
+  const handleLogout = async () => oktaAuth.signOut();
+  console.log(authState)
   return (
     <div className='nav'>
 
@@ -182,9 +192,16 @@ const Nav = () => {
 
         {/* Nav Links */}
         <div className='links-container'>
+          {!authState.isAuthenticated ? 
+          <Link className="nav-login" to='/login'>LOGIN</Link>
+        :
+        <a style={{cursor: 'pointer'}} onClick={handleLogout}>LOGOUT</a>
+        }
+          
           <Link to={'/shopall'} className="shopall">SHOP ALL</Link>
           <div id="about" className='about' onClick={() => { aboutPage() }}>ABOUT</div>
           <div className='cart' onClick={() => { Cart() }}>CART ({cartContext?.cartCount})</div>
+
         </div>
       </div>
       <div className='divider'></div>
@@ -279,7 +296,7 @@ const Nav = () => {
           <div id="cart-promo-continue-id" className="cart-promo-continue-container">
             <div className="cart-promo-title">Add Promo Code</div>
             <input className="cart-promo-input" placeholder="Enter your code"></input>
-            <button className="cart-continue">Continue to Checkout</button>
+            <Link className="cart-continue" onClick={() => { Cart() }} to={'/checkout'}>Continue to Checkout</Link>
           </div>
           <div id="cart-pay-choice-id" className="cart-pay-choice-container">
             <h1>Payment Methods</h1>
