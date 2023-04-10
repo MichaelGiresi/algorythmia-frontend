@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './checkout.css'
 import { CartContext } from '../../Contexts/CartContext'
 import can from '../../assets/can.png'
@@ -12,6 +12,57 @@ const Checkout = () => {
     cartContext?.setCartCount(cartContext?.localCartItems[indexToRemove][4] - cartContext?.cartCount)
     cartContext?.setLocalCartItems(cartContext?.localCartItems.filter((_, index) => index !== indexToRemove));
   }
+
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    shippingStreet: '',
+    shippingCity: '',
+    shippingState: '',
+    shippingCountry: '',
+    shippingZipCode: '',
+    billingCheckBox: false,
+    billingStreet: '',
+    billingCity: '',
+    billingState: '',
+    billingCountry: '',
+    billingZipCode: '',
+    fullNameOnCard: '',
+    cardNumber: '',
+    securityCode: '',
+    expirationMonth: '',
+    expirationYear: ''
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // make POST request to server
+    fetch('localhost:8080/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+  };
+
+  const handleChange = (event) => {
+    const { name, value, type, checked } = event.target;
+
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+  useEffect(() => {
+    console.log(formData)
+  }, [formData])
+
 
   return (
 
@@ -77,38 +128,38 @@ const Checkout = () => {
           <form className='checkout-input-form'>
             <label className='checkout-input-label'>
               First Name:
-              <input className='checkout-input-form-input' type="text" name="firstName"/>
+              <input className='checkout-input-form-input' type="text" name="firstName" value={formData.firstName} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               Last Name:
-              <input className='checkout-input-form-input' type="text" name="lastName"/>
+              <input className='checkout-input-form-input' type="text" name="lastName" value={formData.lastName} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               Email:
-              <input className='checkout-input-form-input' type="email" name="email"/>
+              <input className='checkout-input-form-input' type="email" name="email" value={formData.email} onChange={handleChange}/>
             </label>
           </form>
           <h3>Shipping Information:</h3>
           <form className='checkout-input-form'>
             <label className='checkout-input-label'>
               Street:
-              <input className='checkout-input-form-input' type="text" name="shippingStreet"/>
+              <input className='checkout-input-form-input' type="text" name="shippingStreet" value={formData.shippingStreet} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               City:
-              <input className='checkout-input-form-input' type="text" name="shippingCity"/>
+              <input className='checkout-input-form-input' type="text" name="shippingCity" value={formData.shippingCity} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               State:
-              <input className='checkout-input-form-input' type="text" name="shippingState"/>
+              <input className='checkout-input-form-input' type="text" name="shippingState" value={formData.shippingState} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               Country:
-              <input className='checkout-input-form-input' type="text" name="shippingCountry"/>
+              <input className='checkout-input-form-input' type="text" name="shippingCountry" value={formData.shippingCountry} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               Zip Code:
-              <input className='checkout-input-form-input' type="text" name="shippingZipCode"/>
+              <input className='checkout-input-form-input' type="text" name="shippingZipCode" value={formData.shippingZipCode} onChange={handleChange}/>
             </label>
           </form>
           <h3>Billing Address:</h3>
@@ -119,42 +170,42 @@ const Checkout = () => {
             </label>
             <label className='checkout-input-label'>
               Street:
-              <input className='checkout-input-form-input' type="text" name="billingStreet"/>
+              <input className='checkout-input-form-input' type="text" name="billingStreet" value={formData.billingStreet} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               City:
-              <input className='checkout-input-form-input' type="text" name="billingCity"/>
+              <input className='checkout-input-form-input' type="text" name="billingCity" value={formData.billingCity} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               State:
-              <input className='checkout-input-form-input' type="text" name="billingState"/>
+              <input className='checkout-input-form-input' type="text" name="billingState" value={formData.billingState} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               Country:
-              <input className='checkout-input-form-input' type="text" name="billingCountry"/>
+              <input className='checkout-input-form-input' type="text" name="billingCountry" value={formData.billingCountry} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               Zip Code:
-              <input className='checkout-input-form-input' type="text" name="billingZipCode"/>
+              <input className='checkout-input-form-input' type="text" name="billingZipCode" value={formData.billingZipCode} onChange={handleChange}/>
             </label>
           </form>
           <h3>Credit Card Information:</h3>
           <form className='checkout-input-form'>
             <label className='checkout-input-label'>
               Full name on card:
-              <input className='checkout-input-form-input' type="text" name="firstName"/>
+              <input className='checkout-input-form-input' type="text" name="fullNameOnCard" value={formData.fullNameOnCard} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               Card Number:
-              <input className='checkout-input-form-input' type="number" name="firstName"/>
+              <input className='checkout-input-form-input' type="number" name="cardNumber" value={formData.cardNumber} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               Security Code:
-              <input className='checkout-input-form-input' type="number" name="firstName"/>
+              <input className='checkout-input-form-input' type="number" name="securityCode" value={formData.securityCode} onChange={handleChange}/>
             </label>
             <label className='checkout-input-label'>
               Expiration Month:
-              <select className='credit-month-selection' name="month" >
+              <select className='credit-month-selection' name="month" value={formData.expirationMonth} onChange={handleChange}>
                 <option value="">Select a month</option>
                 <option value="January">January</option>
                 <option value="February">February</option>
@@ -172,7 +223,7 @@ const Checkout = () => {
             </label>
             <label className='checkout-input-label'>
               Expiration Year:
-              <input className='checkout-input-form-input' type="number" name="firstName"/>
+              <input className='checkout-input-form-input' type="number" name="expirationYear" value={formData.expirationYear} onChange={handleChange}/>
             </label>
           </form>
           <button className='checkout-submit-button'>Place Order</button>

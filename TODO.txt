@@ -55,7 +55,7 @@ TODO:
 
         DONE!        -- Create product page
 
-        -- Create checkout page
+        DONE!        -- Create checkout page
 
         -- Implement authentication + authorization with okta
 
@@ -76,6 +76,15 @@ TODO:
 
 ---- Goals for Saturday, April 8th
 
+        -- finish authentication in backend and make springboot secure
+
+        -- Be able to use the checkout page, and add orders to the database
+
+        -- finish admin page. Be able to add products to the database, and see existing orders.
+
+
+---- Goals for Friday, April 7th
+
         -- Deploy Database, front end and springboot
 
         -- Have order be communicated to stripe
@@ -84,9 +93,7 @@ TODO:
 
         -- Handle ssh key for springboot
 
----- Goals for Friday, April 7th
-
-        -- Create checkout page that includes items in cart
+        DONE!        -- Create checkout page that includes items in cart
 
         -- Have checkout manipulate the database
 

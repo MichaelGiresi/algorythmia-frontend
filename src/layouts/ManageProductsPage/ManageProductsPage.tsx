@@ -10,6 +10,6 @@ export const ManageProductsPage = () => {
     }
 
     return (<div>
-        <h1 style={{color: 'white'}}>Admin PAGE</h1>
+        <h1 style={{color: 'white', height: '90vh'}}>Admin PAGE</h1>
     </div>);
 }
