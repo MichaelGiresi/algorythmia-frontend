@@ -28,7 +28,7 @@
 
 .links-container {
   display: none;
-  width: 500px;
+  width: 700px;
   justify-content: space-between;
   color: white;
   font-size: 20px;
@@ -38,7 +38,7 @@
 }
 @media (min-width: 425px) {
   .links-container {
-    width: 500px;
+    width: 700px;
   }
 }
 @media (min-width: 768px) {

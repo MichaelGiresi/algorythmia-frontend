@@ -146,7 +146,7 @@ const Nav = () => {
       a += cartContext?.localCartItems[i][4]
       b += cartContext?.localCartItems[i][5] * cartContext?.localCartItems[i][4] 
 
-      console.log(cartContext?.cartCount)
+      // console.log(cartContext?.cartCount)
       
     }
     cartContext?.setCartCount(a)
@@ -158,7 +158,7 @@ const Nav = () => {
   }
 
   const handleLogout = async () => oktaAuth.signOut();
-  console.log(authState)
+  // console.log(authState)
   return (
     <div className='nav'>
 
@@ -192,6 +192,7 @@ const Nav = () => {
 
         {/* Nav Links */}
         <div className='links-container'>
+          {authState?.accessToken?.claims.userType === 'admin' ? <Link className="nav-login" to={'/admin'}>ADMIN</Link> : <div></div>}
           {!authState.isAuthenticated ? 
           <Link className="nav-login" to='/login'>LOGIN</Link>
         :
