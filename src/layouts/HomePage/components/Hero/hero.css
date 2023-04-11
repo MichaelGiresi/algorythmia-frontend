@@ -381,16 +381,6 @@
   justify-content: space-between;
 }
 
-#test:hover {
-  opacity: 0.7;
-  transition: 1s;
-}
-
-#testt:hover {
-  opacity: 0.7;
-  transition: 1s;
-}
-
 #sheep_sizes {
   display: flex;
   flex-direction: row;
@@ -409,27 +399,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-#testtt:hover {
-  opacity: 0.7;
-  transition: 1s;
-}
-
-#sheep-small {
-  cursor: pointer;
-}
-
-#sheep-medium {
-  cursor: pointer;
-}
-
-#sheep-large {
-  cursor: pointer;
-}
-
-#sheep-extra-large {
-  cursor: pointer;
 }
 
 #sheep-add-to-cart-button {
@@ -461,9 +430,4 @@
   margin-top: 10px;
   border-radius: 8px;
   justify-content: space-around;
-}
-
-.container1:hover, #test:active {
-  opacity: 0.7;
-  transition: 1s;
 }/*# sourceMappingURL=hero.css.map */

@@ -299,12 +299,12 @@ const Nav = () => {
             <input className="cart-promo-input" placeholder="Enter your code"></input>
             <Link className="cart-continue" onClick={() => { Cart() }} to={'/checkout'}>Continue to Checkout</Link>
           </div>
-          <div id="cart-pay-choice-id" className="cart-pay-choice-container">
+          {/* <div id="cart-pay-choice-id" className="cart-pay-choice-container">
             <h1>Payment Methods</h1>
             <button className="cart-pay" id="cart-pay-paypal">Pay Pal</button>
             <button className="cart-pay" id="cart-pay-apple">Apple Pay</button>
             <button className="cart-pay" id="cart-pay-amazon">Amazon Pay</button>
-          </div>
+          </div> */}
         </div>
       </div>
 
