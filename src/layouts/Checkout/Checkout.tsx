@@ -2,16 +2,17 @@ import React, { useContext, useEffect, useState } from 'react'
 import './checkout.css'
 import { CartContext } from '../../Contexts/CartContext'
 import can from '../../assets/can.png'
+import { stringify } from 'querystring'
+// import Checkout from '../../models/CheckoutModel'
 
 const Checkout = () => {
   const cartContext = useContext(CartContext)
+  const [randomNumber1, setRandomNumber1] = useState(Number)
+  const [randomNumber2, setRandomNumber2] = useState(Number)
+  const [randomNumber3, setRandomNumber3] = useState(Number)
+  const [finalOrderNumber, setFinalOrderNumber] = useState(String)
+  let total = cartContext?.cartSubTotal
 
-  const cartRemove = (indexToRemove) => {
-    console.log(indexToRemove)
-
-    cartContext?.setCartCount(cartContext?.localCartItems[indexToRemove][4] - cartContext?.cartCount)
-    cartContext?.setLocalCartItems(cartContext?.localCartItems.filter((_, index) => index !== indexToRemove));
-  }
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -35,21 +36,72 @@ const Checkout = () => {
     expirationYear: ''
   });
 
+  // Checkout Interface Defintions
+  interface Checkout {
+    orderTrackingNumber: string;
+    totalPrice: number;
+    totalQuantity: number;
+    // dateCreated: Date;
+}
+
+// Random number Generator
+useEffect(() => {
+  let randomNumber1: number = 0;
+for (let i = 0; i < 200; i++) {
+    randomNumber1 += Math.floor(Math.random() * 123);
+}
+setRandomNumber1(randomNumber1)
+console.log(randomNumber1);
+
+let randomNumber2: number = 0;
+for (let i = 0; i < 200; i++) {
+    randomNumber2 += Math.floor(Math.random() * 456);
+}
+setRandomNumber2(randomNumber2)
+console.log(randomNumber2);
+
+let randomNumber3: number = 0;
+for (let i = 0; i < 200; i++) {
+    randomNumber3 += Math.floor(Math.random() * 789);
+}
+setRandomNumber3(randomNumber3)
+console.log(randomNumber3);
+const finalOrderNum = (`${randomNumber1}${randomNumber2}${randomNumber3}`)
+
+// const parseFinalOrderNumber = parseInt(finalOrderNumber, 10)
+setFinalOrderNumber(finalOrderNum)
+}, [])
+
+
+
+// Checkout Interface Declarations
+
+  const newCheckout: Checkout = {
+    
+
+    orderTrackingNumber: finalOrderNumber,
+    totalPrice: total,
+    totalQuantity: cartContext?.cartCount
+  }
+
+// Submit All POSTS
   const handleSubmit = (event) => {
+    
     event.preventDefault();
 
     // make POST request to server
-    fetch('localhost:8080/', {
+    fetch('http://localhost:8080/api/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(newCheckout)
     })
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.error(error));
   };
+  
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -59,10 +111,14 @@ const Checkout = () => {
       [name]: type === 'checkbox' ? checked : value
     }));
   };
-  useEffect(() => {
-    console.log(formData)
-  }, [formData])
 
+  // Local Cart Remove Button
+  const cartRemove = (indexToRemove) => {
+    console.log(indexToRemove)
+
+    cartContext?.setCartCount(cartContext?.localCartItems[indexToRemove][4] - cartContext?.cartCount)
+    cartContext?.setLocalCartItems(cartContext?.localCartItems.filter((_, index) => index !== indexToRemove));
+  }
 
   return (
 
@@ -226,7 +282,7 @@ const Checkout = () => {
               <input className='checkout-input-form-input' type="number" name="expirationYear" value={formData.expirationYear} onChange={handleChange}/>
             </label>
           </form>
-          <button className='checkout-submit-button'>Place Order</button>
+          <button className='checkout-submit-button' onClick={(handleSubmit)}>Place Order</button>
         </div>
     </div>
   )
