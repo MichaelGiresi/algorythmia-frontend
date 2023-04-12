@@ -1,0 +1,31 @@
+.admin-add-product-container {
+  width: 95%;
+  max-width: 1600px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  color: #c3c3c3;
+  border: 1px solid #c3c3c3;
+  margin: 50px auto 0 auto;
+}
+
+.admin-input-form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
+  height: 50vh;
+  width: 30%;
+  justify-content: space-around;
+  font-family: "JetBrains Mono";
+}
+
+.admin-size-input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-input-label {
+  display: flex;
+  justify-content: space-between;
+}/*# sourceMappingURL=manageProductsPage.css.map */
