@@ -41,6 +41,7 @@ const Hero = (props) => {
       
       
       console.log(products[0].id)
+      console.log(products[0])
     };
     fetchProducts().catch((error) => {
       setIsLoading(false);
