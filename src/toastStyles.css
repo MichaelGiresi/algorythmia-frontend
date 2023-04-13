@@ -1,0 +1,11 @@
+.Toastify__toast {
+    background-color: black;
+    font-family: 'JetBrains Mono';
+    color: #c3c3c3;
+    border: 1px solid #c3c3c3;
+    
+}
+
+.Toastify__close-button {
+    color: white;
+}

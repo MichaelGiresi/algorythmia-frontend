@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { CartContext } from '../../Contexts/CartContext';
 import '../ManageProductsPage/manageProductsPage.css'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const ManageProductsPage = () => {
   interface AddProduct {
@@ -110,8 +112,16 @@ export const ManageProductsPage = () => {
       body: JSON.stringify(newProduct)
     })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => toast.success("Product Added Successfully"))
       .catch(error => console.error(error));
+      
+
+      if(fetchTrigger) {
+        setFetchTrigger(false)
+      } else {
+  
+        setFetchTrigger(true);
+      }
 
     setAdminFormData({
       name: '',
@@ -129,7 +139,6 @@ export const ManageProductsPage = () => {
         id: 0
       }
     })
-    setFetchTrigger((prev) => !prev);
   };
 
 
@@ -150,9 +159,9 @@ export const ManageProductsPage = () => {
       });
 
       if (response.ok) {
+        toast.success("Product Deleted Successfully")
         console.log('Product deleted successfully');
         setFetchTrigger((prev) => !prev);
-        // You may also want to update your UI, e.g., remove the product from the list
       } else {
         console.error('Error deleting product:', response.status, response.statusText);
       }
