@@ -269,15 +269,11 @@ const Nav = () => {
                   <h6>{`$${cartContext?.localCartItems[index][5]}`}</h6>
 
                   {/* Product In Stock */}
-                  {/* {cartContext?.localCartItems[index].active ? <h5>In Stock</h5> : <h5>Out of Stock</h5> } */}
+
                   {/* Remove Button */}
                   <button className="cart-product-remove-button" id="cart-product-remove" onClick={() => { cartRemove(index) }}>REMOVE</button>
                 </div>
-                {/* <div className="cart-product-increment-laptop">
-                  <button id="cart-increment-remove" onClick={() => { cartContext?.setCartCount(cartContext?.cartCount - 1) }}>-</button>
-                  <div id="cart-increment">{cartContext?.localCartItems[index][4]}</div>
-                  <button id="cart-increment-add" onClick={() => { cartContext?.setCartCount(cartContext?.cartCount + 1) }}>+</button>
-                </div> */}
+
               </div>
             </div>
 
