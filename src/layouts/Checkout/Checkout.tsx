@@ -15,8 +15,9 @@ const Checkout = () => {
   const [customers, setCustomers] = useState([])
   const [shippingAddresses, setShippingAddresses] = useState([])
   let total = cartContext?.cartSubTotal
+  let totalQuantity = cartContext?.cartCount
   let activeCustomer = []
-
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -40,10 +41,23 @@ const Checkout = () => {
   });
 
   // Checkout Interface Defintions
+
+  interface OrderItems {
+    quantity: Number,
+    unitPrice: Number,
+    orderId: {id: Number},
+    productId: {id: Number},
+    sizeId: {id: Number}
+  }
+
+
   interface Checkout {
-    orderTrackingNumber: string;
+    orderTrackingNumber: Number;
     totalPrice: number;
     totalQuantity: number;
+    shippingAddressId: {id: Number};
+    customer: {id: Number};
+    status: boolean;
 }
 
   interface Customer {
@@ -64,58 +78,66 @@ const Checkout = () => {
 
   }
 
-// Random number Generator
-useEffect(() => {
-  let randomNumber1: number = 0;
-for (let i = 0; i < 200; i++) {
-    randomNumber1 += Math.floor(Math.random() * 123);
-}
-setRandomNumber1(randomNumber1)
-// console.log(randomNumber1);
-
-let randomNumber2: number = 0;
-for (let i = 0; i < 200; i++) {
-    randomNumber2 += Math.floor(Math.random() * 456);
-}
-setRandomNumber2(randomNumber2)
-// console.log(randomNumber2);
-
-let randomNumber3: number = 0;
-for (let i = 0; i < 200; i++) {
-    randomNumber3 += Math.floor(Math.random() * 789);
-}
-setRandomNumber3(randomNumber3)
-// console.log(randomNumber3);
-const finalOrderNum = (`${randomNumber1}${randomNumber2}${randomNumber3}`)
-
-// const parseFinalOrderNumber = parseInt(finalOrderNumber, 10)
-setFinalOrderNumber(finalOrderNum)
-}, [])
-
-
-
-// Checkout Interface Declarations
-
-  const newCheckout: Checkout = {
-    
-
-    orderTrackingNumber: finalOrderNumber,
-    totalPrice: total,
-    totalQuantity: cartContext?.cartCount
+  interface SizeChart {
+    small: Number
   }
 
-  const newCustomer: Customer = {
+  // useEffect(() => {
+  //   console.log(cartContext?.localCartItems)
+  // })
+
+// Random number Generator
+useEffect(() => {
+
+}, [])
+
+// Checkout Interface Declarations
+ const newCustomer: Customer = {
     firstName: formData.firstName,
     lastName: formData.lastName,
     email: formData.email
   }
 
 
+//
 // Submit form
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let activeCustomer = []
-    let activeShippingAddressId = 0
+    let activeCustomer = [];
+    let activeShippingAddressId = 0;
+    let activeOrderNumber = 0;
+    let activeOrderId = 0;
+
+    // Order Tracking Number Generator 
+
+    let randomNumber1: number = 0;
+    for (let i = 0; i < 200; i++) {
+        randomNumber1 += Math.floor(Math.random() * 123);
+    }
+    setRandomNumber1(randomNumber1)
+    // console.log(randomNumber1);
+    
+    let randomNumber2: number = 0;
+    for (let i = 0; i < 200; i++) {
+        randomNumber2 += Math.floor(Math.random() * 456);
+    }
+    setRandomNumber2(randomNumber2)
+    // console.log(randomNumber2);
+    
+    let randomNumber3: number = 0;
+    for (let i = 0; i < 200; i++) {
+        randomNumber3 += Math.floor(Math.random() * 789);
+    }
+    setRandomNumber3(randomNumber3)
+    // console.log(randomNumber3);
+    const finalOrderNum = (`${randomNumber1}${randomNumber2}${randomNumber3}`)
+    
+    // const parseFinalOrderNumber = parseInt(finalOrderNumber, 10)
+    setFinalOrderNumber(finalOrderNum)
+    let orderTrackingNumber: Number = parseInt(finalOrderNum)
+    console.log(orderTrackingNumber)
+    
+
 
     try {
     // Check to see if customer already exists in the database, Get array of customers
@@ -135,9 +157,8 @@ setFinalOrderNumber(finalOrderNum)
         toast.error("Please Complete All Fields")
       } else {
 
-        let a = false
-
       // Looping over the length of customers array
+      let a = false
       for(let i = 0; i < customerArray.length; i++) {
 
       // If the form data does not match any existing customers, post new customer
@@ -153,8 +174,10 @@ setFinalOrderNumber(finalOrderNum)
 
           
         } else {
+          // Post new customer to the database
+          console.log("The customer does not exist, adding them to the database...")
           try{
-            fetch('http://localhost:8080/api/customers', {
+            await fetch('http://localhost:8080/api/customers', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -162,14 +185,18 @@ setFinalOrderNumber(finalOrderNum)
               body: JSON.stringify(newCustomer)
             }) 
             toast.success("New Customer Added")
+            console.log("New Customer Added!")
             setCustomers([...customerArray, newCustomer])
             
           }
           catch{
             toast.error("The Customer wasn't added")
+            console.log("New Customer Not added")
           }
-
+          
+          // Final get request to customers table to get all information on new customer.
           try {
+            console.log("Getting the most up to date customer table...")
             const urlCustomers = 'http://localhost:8080/api/customers'
             const optionsCustomers = {
             method: "GET", 
@@ -179,18 +206,20 @@ setFinalOrderNumber(finalOrderNum)
             const response = await fetch(urlCustomers, optionsCustomers);
             const data = await response.json();
             const customerArray = data._embedded.customers;
+            console.log(customerArray)
             for(let i = 0; i < customerArray.length; i++) {
               if(customerArray[i].firstName === formData.firstName && customerArray[i].lastName === formData.lastName && customerArray[i].email === formData.email) {
 
                 activeCustomer = [customerArray[i].id, customerArray[i].firstName, customerArray[i].lastName, customerArray[i].email]
+                console.log(`The active customer has been found!`)
                 } 
             }
           }
-          catch{
-
+          catch (error){
+            console.log(`There was an error ${error}`)
           }
         } 
-    }
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -230,7 +259,7 @@ setFinalOrderNumber(finalOrderNum)
             shippingAddressArray[i].id == activeCustomer[0]) {
               a = true
             }
-            
+
         }
 
         // console.log(activeCustomer)
@@ -248,13 +277,10 @@ setFinalOrderNumber(finalOrderNum)
             customer: {id: activeCustomer[0]}
         
           }
-          // console.log(a)
-          // console.log(activeCustomer)
-          // console.log(newShippingAddress)
 
           // POST to shipping_address table 
           try{
-            fetch('http://localhost:8080/api/shippingAddress/', {
+            await fetch('http://localhost:8080/api/shippingAddress/', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -270,7 +296,6 @@ setFinalOrderNumber(finalOrderNum)
             toast.error("The Shipping Address wasn't added")
             console.log(error)
           }
-
         } else {
           console.log('The Shipping address and customer id already exist')
         }
@@ -280,33 +305,183 @@ setFinalOrderNumber(finalOrderNum)
       console.error("Error fetching data", error)
     }
 
+    // GET request of shipping table to get active shipping id
+    try {
+      const urlShippingAddresses = 'http://localhost:8080/api/shippingAddress/'
+      const optionsShippingAddresses = {
+      method: "GET", 
+      headers: 
+        {"Content-Type": "application/json"},
+      };
+      const response = await fetch(urlShippingAddresses, optionsShippingAddresses);
+      const data = await response.json();
+      console.log(data)
+      const shippingAddressesQuery = data
+      for(let i = 0; i < shippingAddressesQuery.length; i++) {
+        if(shippingAddressesQuery[i].city === formData.shippingCity && 
+          shippingAddressesQuery[i].country === formData.shippingCountry && 
+          shippingAddressesQuery[i].state === formData.shippingState && 
+          shippingAddressesQuery[i].street === formData.shippingStreet &&
+          shippingAddressesQuery[i].zipCode === formData.shippingZipCode) {
+
+          activeShippingAddressId = shippingAddressesQuery[i].id
+          console.log(`This is the active shipping id = ${activeShippingAddressId}`)
+          } 
+      }
+    }
+    catch (error){
+      console.log(`There was an error ${error}`)
+    }
 
 
 
 
+  {/*
+    Finally, I am at the point of creating a proper order post request.
 
+    The order post request requires several pieces of information, and also contains two posts.
 
-    // make POST request to server
-    // fetch('http://localhost:8080/api/orders', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(newCheckout)
-    // })
-    // .then(response => response.json())
-    // .then(data => console.log(data))
-    // .catch(error => console.error(error));
+    The first post is to the orders table. This post will contain the following information:
+
+      An order tracking number, total price, total quanitity, customer id, shipping address id and the status.
+
+    The second post request will be to the order_items table. This post will contain the following information:
+
+    The quantity of a specific item, the unit price of a specific item, order id, product id, size id.  
+
+    I will either have to make many post requests, however many items there are in the total quanitity, or figure out how to make one post request, and post several enteries in one shot.
+
+  */}
+  try {
+    const newCheckout: Checkout = {
+    
+
+      orderTrackingNumber: orderTrackingNumber,
+      totalPrice: total,
+      totalQuantity: cartContext?.cartCount,
+      customer: {id: activeCustomer[0]},
+      shippingAddressId: {id: activeShippingAddressId},
+      status: true
+
+      
+    }
+    // make POST request to order table
+    await fetch('http://localhost:8080/api/orders/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newCheckout)
+    })
+    .then(response => {
+      console.log("Response Status: ", response.status)
+      console.log("Response Status Text: ", response.statusText)
+    })
+  } 
+  catch (error){
+    console.log("There was an error posting the new order")
+    console.log(error)
+  }
+  // Final GET request for the new order number
+  try {
+    const url = 'http://localhost:8080/api/orders?size=1000'
+    const options = {
+    method: "GET", 
+    headers: 
+      {"Content-Type": "application/json"},
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
+    const orders = data._embedded.orders
+    console.log(orders)
+    console.log(orderTrackingNumber)
+    for(let i = 0; i < orders.length; i++) {
+      if(orders[i].orderTrackingNumber === orderTrackingNumber) {
+
+        // activeOrderNumber = orders[i].orderTrackingNumber
+        activeOrderId = orders[i].id
+        console.log(`This is the active order id = ${activeOrderId}`)
+        } 
+    }
+    
+  }
+  catch (error){
+    console.log(`There was an error ${error}`)
+  }
+
+  for(let i = 0; i < cartContext?.localCartItems.length; i++ ) {
+
+    
+    try{
+      const newOrderItems: OrderItems = {
+        quantity: cartContext?.localCartItems[i][4],
+        unitPrice: cartContext?.localCartItems[i][5],
+        orderId: {id: activeOrderId},
+        productId: {id: cartContext?.localCartItems[i][0]},
+      sizeId: {id: cartContext?.localCartItems[i][9]}
+    }
+    console.log(newOrderItems)
+    const response = await fetch('http://localhost:8080/api/orderItems/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newOrderItems)
+    });
+    console.log("Response Status: ", response.status);
+    console.log("Response Status Text: ", response.statusText);
+    
+  }
+  catch (error){
+    console.log(error)
+  }
+  
+}
+
   };
   
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+  
+    if (type === 'checkbox' && name === 'billingCheckBox' && checked) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        billingStreet: prevFormData.shippingStreet,
+        billingCity: prevFormData.shippingCity,
+        billingState: prevFormData.shippingState,
+        billingCountry: prevFormData.shippingCountry,
+        billingZipCode: prevFormData.shippingZipCode,
+        [name]: checked,
+      }));
+    } else if (type === 'checkbox' && name === 'billingCheckBox' && !checked) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        billingStreet: '',
+        billingCity: '',
+        billingState: '',
+        billingCountry: '',
+        billingZipCode: '',
+        [name]: checked,
+      }));
+    } else if (name.startsWith('shipping')) {
+      const updatedFormData = {
+        ...formData,
+        [name]: value,
+      };
+  
+      if (formData.billingCheckBox) {
+        const billingAddressFields = name.replace('shipping', 'billing');
+        updatedFormData[billingAddressFields] = value;
+      }
+  
+      setFormData(updatedFormData);
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: type === 'checkbox' ? checked : value,
+      }));
+    }
   };
 
   // Local Cart Remove Button
@@ -418,7 +593,7 @@ setFinalOrderNumber(finalOrderNum)
           <h3>Billing Address:</h3>
           <form className='checkout-input-form'>
           <label className='checkout-input-label-checkbox'>
-              <input className='checkout-input-form-input-checkbox' type="checkbox" name="billingCheckBox"/>
+              <input className='checkout-input-form-input-checkbox' onChange={handleChange} type="checkbox" name="billingCheckBox"/>
               Billing Address same as Shipping Address
             </label>
             <label className='checkout-input-label'>
