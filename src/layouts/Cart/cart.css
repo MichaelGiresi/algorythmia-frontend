@@ -245,7 +245,7 @@
 }
 @media (min-width: 426px) {
   .cart-product-info-increment-wrapper {
-    width: inherit;
+    width: 50%;
   }
 }
 
