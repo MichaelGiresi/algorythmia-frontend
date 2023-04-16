@@ -186,8 +186,8 @@ setFinalOrderNumber(finalOrderNum)
                 } 
             }
           }
-          catch{
-
+          catch (error){
+            console.log(`There was an error ${error}`)
           }
         } 
     }
@@ -230,7 +230,7 @@ setFinalOrderNumber(finalOrderNum)
             shippingAddressArray[i].id == activeCustomer[0]) {
               a = true
             }
-            
+
         }
 
         // console.log(activeCustomer)
@@ -248,9 +248,6 @@ setFinalOrderNumber(finalOrderNum)
             customer: {id: activeCustomer[0]}
         
           }
-          // console.log(a)
-          // console.log(activeCustomer)
-          // console.log(newShippingAddress)
 
           // POST to shipping_address table 
           try{
@@ -270,7 +267,6 @@ setFinalOrderNumber(finalOrderNum)
             toast.error("The Shipping Address wasn't added")
             console.log(error)
           }
-
         } else {
           console.log('The Shipping address and customer id already exist')
         }
@@ -280,8 +276,51 @@ setFinalOrderNumber(finalOrderNum)
       console.error("Error fetching data", error)
     }
 
+    // GET request of shipping table to get active shipping id
+    try {
+      const urlShippingAddresses = 'http://localhost:8080/api/shippingAddress/'
+      const optionsShippingAddresses = {
+      method: "GET", 
+      headers: 
+        {"Content-Type": "application/json"},
+      };
+      const response = await fetch(urlShippingAddresses, optionsShippingAddresses);
+      const data = await response.json();
+      console.log(data)
+      const shippingAddressesQuery = data
+      for(let i = 0; i < shippingAddressesQuery.length; i++) {
+        if(shippingAddressesQuery[i].city === formData.shippingCity && 
+          shippingAddressesQuery[i].country === formData.shippingCountry && 
+          shippingAddressesQuery[i].state === formData.shippingState && 
+          shippingAddressesQuery[i].street === formData.shippingStreet &&
+          shippingAddressesQuery[i].zipCode === formData.shippingZipCode) {
+
+          activeShippingAddressId = shippingAddressesQuery[i].id
+          console.log(`This is the shipping id = ${activeShippingAddressId}`)
+          } 
+      }
+    }
+    catch (error){
+      console.log(`There was an error ${error}`)
+    }
 
 
+  {/*
+    Finally, I am at the point of creating a proper order post request.
+
+    The order post request requires several pieces of information, and also contains two posts.
+
+    The first post is to the orders table. This post will contain the following information:
+
+      An order tracking number, total price, total quanitity, customer id, shipping address id and the status.
+
+    The second post request will be to the order_items table. This post will contain the following information:
+
+    The quantity of a specific item, the unit price of a specific item, order id, product id, size id.  
+
+    I will either have to make many post requests, however many items there are in the total quanitity, or figure out how to make one post request, and post several enteries in one shot.
+
+  */}
 
 
 
@@ -302,11 +341,45 @@ setFinalOrderNumber(finalOrderNum)
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+  
+    if (type === 'checkbox' && name === 'billingCheckBox' && checked) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        billingStreet: prevFormData.shippingStreet,
+        billingCity: prevFormData.shippingCity,
+        billingState: prevFormData.shippingState,
+        billingCountry: prevFormData.shippingCountry,
+        billingZipCode: prevFormData.shippingZipCode,
+        [name]: checked,
+      }));
+    } else if (type === 'checkbox' && name === 'billingCheckBox' && !checked) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        billingStreet: '',
+        billingCity: '',
+        billingState: '',
+        billingCountry: '',
+        billingZipCode: '',
+        [name]: checked,
+      }));
+    } else if (name.startsWith('shipping')) {
+      const updatedFormData = {
+        ...formData,
+        [name]: value,
+      };
+  
+      if (formData.billingCheckBox) {
+        const billingAddressFields = name.replace('shipping', 'billing');
+        updatedFormData[billingAddressFields] = value;
+      }
+  
+      setFormData(updatedFormData);
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: type === 'checkbox' ? checked : value,
+      }));
+    }
   };
 
   // Local Cart Remove Button
@@ -418,7 +491,7 @@ setFinalOrderNumber(finalOrderNum)
           <h3>Billing Address:</h3>
           <form className='checkout-input-form'>
           <label className='checkout-input-label-checkbox'>
-              <input className='checkout-input-form-input-checkbox' type="checkbox" name="billingCheckBox"/>
+              <input className='checkout-input-form-input-checkbox' onChange={handleChange} type="checkbox" name="billingCheckBox"/>
               Billing Address same as Shipping Address
             </label>
             <label className='checkout-input-label'>
