@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { CartContext } from '../../Contexts/CartContext';
 import '../ManageProductsPage/manageProductsPage.css'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const ManageProductsPage = () => {
   interface AddProduct {
@@ -97,45 +99,63 @@ export const ManageProductsPage = () => {
   }
 
   const handleSubmit = (event) => {
-    console.log("Sending data:", JSON.stringify(newProduct))
     event.preventDefault();
+    if(adminFormData.name === '' || 
+        adminFormData.sku === ''  ||
+        // adminFormData.sizeSmall === 0 || 
+        // adminFormData.sizeMedium === 0 || 
+        // adminFormData.sizeLarge === 0 ||
+        // adminFormData.sizeExtraLarge === 0 ||
+        // adminFormData.sizeExtraExtraLarge === 0 ||
+        adminFormData.description === '' ||
+        adminFormData.unitPrice === 0 ||
+        adminFormData.imageUrl === '' ||   
+        adminFormData.category.id === 0
+        ) {
 
+          toast.error("Please Complete all Forms")
+  } else {
+    console.log("Sending data:", JSON.stringify(newProduct))
+    
+    
     // make POST request to server
     fetch(`http://localhost:8080/api/products/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-
+      
       body: JSON.stringify(newProduct)
     })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
-
+    .then(response => response.json())
+    .then(data => toast.success("Product Added Successfully"))
+    .catch(error => console.error(error));
+    setFetchTrigger((prev) => !prev);
+    
     setAdminFormData({
       name: '',
       sku: '',
       sizeSmall: 0,
-      sizeMedium: 0,
-      sizeLarge: 0,
-      sizeExtraLarge: 0,
-      sizeExtraExtraLarge: 0,
-      description: '',
-      unitPrice: 0,
-      imageUrl: '',
-      active: true,
-      category: {
-        id: 0
-      }
-    })
-    setFetchTrigger((prev) => !prev);
+sizeMedium: 0,
+sizeLarge: 0,
+sizeExtraLarge: 0,
+sizeExtraExtraLarge: 0,
+description: '',
+unitPrice: 0,
+imageUrl: '',
+active: true,
+category: {
+  id: 0
+}
+})
+
+  }
   };
-
-
+  
+  
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-
+    
     setAdminFormData(prevFormData => ({
       ...prevFormData,
       [name]: name === 'category' ? { id: parseInt(value) } : value
@@ -150,9 +170,9 @@ export const ManageProductsPage = () => {
       });
 
       if (response.ok) {
+        toast.success("Product Deleted Successfully")
         console.log('Product deleted successfully');
         setFetchTrigger((prev) => !prev);
-        // You may also want to update your UI, e.g., remove the product from the list
       } else {
         console.error('Error deleting product:', response.status, response.statusText);
       }
@@ -184,23 +204,23 @@ export const ManageProductsPage = () => {
             <div className='admin-size-input-container'>
               <h4 style={{ marginBottom: '10px', marginTop: '0px' }}>Sizes:</h4>
               <label className='admin-input-label'> Small
-                <input className='admin-input-form-input' type="number" name="sizeSmall" value={adminFormData.sizeSmall} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeSmall" value={adminFormData.sizeSmall} onChange={handleChange} />
               </label>
 
               <label className='admin-input-label'> Medium
-                <input className='admin-input-form-input' type="number" name="sizeMedium" value={adminFormData.sizeMedium} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeMedium" value={adminFormData.sizeMedium} onChange={handleChange} />
               </label>
 
               <label className='admin-input-label'> Large
-                <input className='admin-input-form-input' type="number" name="sizeLarge" value={adminFormData.sizeLarge} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeLarge" value={adminFormData.sizeLarge} onChange={handleChange} />
               </label>
 
               <label className='admin-input-label'> Extra Large
-                <input className='admin-input-form-input' type="number" name="sizeExtraLarge" value={adminFormData.sizeExtraLarge} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraLarge" value={adminFormData.sizeExtraLarge} onChange={handleChange} />
               </label>
 
               <label className='admin-input-label'> Extra Extra Large
-                <input className='admin-input-form-input' type="number" name="sizeExtraExtraLarge" value={adminFormData.sizeExtraExtraLarge} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraExtraLarge" value={adminFormData.sizeExtraExtraLarge} onChange={handleChange} />
               </label>
 
             </div>
@@ -210,7 +230,7 @@ export const ManageProductsPage = () => {
             </label>
             <label className='admin-input-label'>
               Price:
-              <input className='admin-input-form-input' type="number" name="unitPrice" value={adminFormData.unitPrice} onChange={handleChange} />
+              <input className='admin-input-form-input' min={0} type="number" name="unitPrice" value={adminFormData.unitPrice} onChange={handleChange} />
             </label>
             <label className='admin-input-label'>
               Image URL:

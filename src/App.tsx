@@ -21,6 +21,8 @@ import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js'
 import { Security, LoginCallback, SecureRoute } from '@okta/okta-react'
 import LoginWidget from "./Auth/LoginWidget";
 import { ManageProductsPage } from "./layouts/ManageProductsPage/ManageProductsPage";
+import { ToastContainer } from "react-toastify";
+import '../src/toastStyles.css'
 
 const oktaAuth = new OktaAuth(oktaConfig)
 
@@ -92,6 +94,7 @@ function App() {
         <Footer />
       </CartContext.Provider>
       <Route path='/login/callback' component={LoginCallback} />
+      <ToastContainer/>
       </Router>
                               </Security>
     </div>
