@@ -61,7 +61,7 @@ TODO:
 
         DONE!        -- Create cart state
 
-        -- have checkout log order to database and increment units in stock 
+        DONE!        -- have checkout log order to database and increment units in stock 
         
         -- Commmunicate with stripe
 
