@@ -21,6 +21,7 @@ export const ProductPage = (props) => {
     const [isLoadingProducts, setIsLoadingProducts] = useState(true);
     const [httpError, setHttpError] = useState(null);
     const [productSize, setProductSize] = useState(0);
+    const [productSizeCategory, setProductSizeCategory] = useState(0)
     
     const productId = (window.location.pathname).split('/')[2];
     const restOfProducts = []
@@ -111,11 +112,20 @@ export const ProductPage = (props) => {
         console.log('--------------------------')
 
     }, [cartContext?.localCartItems])
+
+    const sizeMapping = {
+        1: "Size: S",
+        2: "Size: M",
+        3: "Size: L",
+        4: "Size: XL",
+        5: "Size: XXL"
+    }
     
     const handleProductChange = (e: any) => {
-        // setProductSize(0)
-        setProductSize(e.target.value)
-        // console.log(productSize)
+        const selectedValue = parseInt(e.target.value)
+        const selectedSize = sizeMapping[selectedValue]
+        setProductSize(selectedSize)
+        setProductSizeCategory(selectedValue)
         const btn = document.getElementById('product-add-to-cart-button')
         btn.innerText = 'Add To Cart'
     }
@@ -137,7 +147,7 @@ export const ProductPage = (props) => {
 
                 if(cartContext?.localCartItems.length === 0){
                     
-                    cartContext?.setLocalCartItems([[product.id, product.name, product.imageUrl, productSize, itemQuantity, product.unitPrice, product.sku, product.description, product.active]])
+                    cartContext?.setLocalCartItems([[product.id, product.name, product.imageUrl, productSize, itemQuantity, product.unitPrice, product.sku, product.description, product.active, productSizeCategory]])
                     
                 } else {
 
@@ -157,7 +167,7 @@ export const ProductPage = (props) => {
 
                     if(a === false) {
                         
-                        cartContext?.setLocalCartItems([...cartContext?.localCartItems, [product.id, product.name, product.imageUrl, productSize, itemQuantity, product.unitPrice, product.sku, product.description, product.active]])
+                        cartContext?.setLocalCartItems([...cartContext?.localCartItems, [product.id, product.name, product.imageUrl, productSize, itemQuantity, product.unitPrice, product.sku, product.description, product.active, productSizeCategory]])
                         const btn = document.getElementById('product-add-to-cart-button')
                         btn.innerText = 'Added to Cart!'
                         console.log(cartContext?.localCartItems)
@@ -185,13 +195,13 @@ export const ProductPage = (props) => {
                     </div>
                     <div className='product-hero-size-container'>
                         <div id='product-size'>SELECT SIZE:</div>
-                        <select value={productSize} onChange={handleProductChange}  className='product-size-selector-container'>
+                        <select value={productSizeCategory} onChange={handleProductChange}  className='product-size-selector-container'>
                              <option value={0} id='product-size-select'>Select</option>
-                            <option value={'Size: S'} id='product-size-small'>Small</option>
-                            <option value={'Size: M'} id='product-size-medium'>Medium</option>
-                            <option value={'Size: L'} id='product-size-large'>Large</option>
-                            <option value={'Size: XL'} id='product-size-extralarge'>Extra Large</option>
-                            <option value={'Size: XXL'} id='product-size-extraextralarge'>Extra Extra Large</option>
+                            <option value={1} id='product-size-small'>Small</option>
+                            <option value={2} id='product-size-medium'>Medium</option>
+                            <option value={3} id='product-size-large'>Large</option>
+                            <option value={4} id='product-size-extralarge'>Extra Large</option>
+                            <option value={5} id='product-size-extraextralarge'>Extra Extra Large</option>
                         </select>
                     </div>
                     <div className='product-hero-info-container'>

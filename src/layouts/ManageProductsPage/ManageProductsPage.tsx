@@ -55,6 +55,7 @@ export const ManageProductsPage = () => {
         const response = await fetch('http://localhost:8080/api/orders/')
         const data = await response.json();
         setOrders(data)
+        console.log(data)
       } catch (error) {
         console.error('Error fetching orders:', error)
       }
@@ -292,7 +293,7 @@ category: {
               <th>Tracking Number</th>
               <th>Total Price</th>
               <th>Total Quantity</th>
-              <th>Billing Address ID</th>
+              {/* <th>Billing Address ID</th> */}
               <th>Customer ID</th>
               <th>Shipping Address ID</th>
               <th>Status</th>
@@ -307,9 +308,9 @@ category: {
                 <td>{order.orderTrackingNumber}</td>
                 <td>${order.totalPrice}</td>
                 <td>{order.totalQuantity}</td>
-                <td>{order.billingAddressId}</td>
-                <td>{order.customerId}</td>
-                <td>{order.shippingAddressId}</td>
+                {/* <td>{order.billingAddressId}</td> */}
+                <td>{order.customer.id}</td>
+                <td>{order.shippingAddressId.id}</td>
                 <td>{order.status ? 'Active' : 'Inactive'}</td>
                 <td>{order.dateCreated}</td>
                 <td>{order.lastUpdated}</td>
