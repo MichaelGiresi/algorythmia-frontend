@@ -57,7 +57,7 @@ TODO:
 
         DONE!        -- Create checkout page
 
-        -- Implement authentication + authorization with okta
+         -- Implement authentication + authorization with okta
 
         DONE!        -- Create cart state
 
@@ -65,7 +65,7 @@ TODO:
         
         -- Commmunicate with stripe
 
-        -- Create Admin page, where the admin can create, remove and change quantity of products and read orders
+        DONE!        -- Create Admin page, where the admin can create, remove and read orders
 
         -- deploy the database, springboot and front end
 
