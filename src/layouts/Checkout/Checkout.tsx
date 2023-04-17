@@ -82,9 +82,9 @@ const Checkout = () => {
     small: Number
   }
 
-  // useEffect(() => {
-  //   console.log(cartContext?.localCartItems)
-  // })
+  useEffect(() => {
+    console.log(cartContext?.localCartItems)
+  })
 
 // Random number Generator
 useEffect(() => {
@@ -101,6 +101,7 @@ useEffect(() => {
 
 //
 // Submit form
+//
   const handleSubmit = async (event) => {
     event.preventDefault();
     let activeCustomer = [];
@@ -410,8 +411,6 @@ useEffect(() => {
   }
 
   for(let i = 0; i < cartContext?.localCartItems.length; i++ ) {
-
-    
     try{
       const newOrderItems: OrderItems = {
         quantity: cartContext?.localCartItems[i][4],
@@ -435,8 +434,79 @@ useEffect(() => {
   catch (error){
     console.log(error)
   }
-  
 }
+
+try {
+  const url = 'http://localhost:8080/api/products'
+  const options = {
+    method: "GET",
+    headers: {"Content-Type": 'application/json'},
+  };
+  const response = await fetch(url, options);
+  const data = await response.json();
+  const products = data._embedded.products
+  // console.log("Here is the list of products from the checkout button")
+  console.log(products)
+  const sizeMapping = {
+    1: "sizeSmall",
+    2: "sizeMedium",
+    3: "sizeLarge",
+    4: "sizeExtraLarge",
+    5: "sizeExtraExtraLarge"
+}
+
+const sizeMappingPutRequest = {
+  1: "size_small",
+  2: "size_medium",
+  3: "size_large",
+  4: "size_extra_large",
+  5: "size_extra_extra_large"
+}
+
+  for(let i = 0; i < products.length; i++) {
+    for(let j = 0; j < cartContext?.localCartItems.length; j++){
+      if(products[i].id === cartContext?.localCartItems[j][0]) {
+        // If the product id from the get request, and the product id from the 
+        // current local cart items elemet in the array equal, then we want to create
+        // a put request, involving the size id of the localcartitems[j] array.
+        // Subtract the quanity from the value in the field of products[i].sizeMapping[cartContext?.localcartItems[j][9]]
+        const size = sizeMapping[cartContext?.localCartItems[j][9]]
+        const quantity = cartContext?.localCartItems[j][4]
+        const productSize = products[i][size]
+        // console.log(size)
+        // console.log(productSize)
+        const total = productSize - quantity
+        console.log(total)
+
+        try {
+          const sizeMapPutRequest: string = sizeMapping[cartContext?.localCartItems[j][9]]
+          console.log(sizeMapPutRequest)
+          const url = `http://localhost:8080/api/products/${products[i].id}`
+          const options = {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({[sizeMapPutRequest]: total})
+          };
+          const response = await fetch(url, options);
+          if (response.status === 200) {
+            console.log("Successfully updated the quantity")
+          } else {
+            console.error("Failed to update the quantity")
+          }
+        } catch (error) {
+          console.log(`There was an error in the size subtraction ${error}`)
+        }
+      }
+    }
+    
+  }
+} catch (error){
+  console.log(`There was an error getting the array of products ${error}`)
+}
+
+
 
   };
   
