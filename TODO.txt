@@ -2,16 +2,27 @@ BUGS:
 
         HOME PAGE:
 
-                -- Price in hero is not dynamic
+                -- Price & Title in hero is not dynamic
+                -- Upcomming Products arent clickable
+                -- width of upcomming isnt properly dynamic
+                -- margin bottom on upcomming
 
+        NAV: 
+                -- Add underline on hover for each nav link
+
+        NAV HAMBURGER: 
+                -- Add admin link
+                -- Add login / logout link
+                
         FOOTER:
-
-                -- Text needs to be bigger
-                -- shop all link doesnt work
+                -- Work on Styles
+                -- Text needs to be fixed
+        DONE!        -- shop all link doesnt work
 
         SHOPALL:
 
-                -- Prices and titles arent dynamic
+        DONE!        -- Prices and titles arent dynamic
+                -- More to Come should disappear at a certain vw
 
         SUBTOTAL CART:
 
@@ -27,12 +38,18 @@ BUGS:
 
         CHECKOUT PAGE:
 
-                -- Inputs need a lot of work, specifically type definitions and understanding of how inputs will be collected
+        DONE!        -- Inputs need a lot of work, specifically type definitions and understanding of how inputs will be collected
                 -- Input checks to make sure the correct format is included
                 -- place order check to make sure we are accepting cards that we actually accept.
-                -- Figure out how information collected will be stored in an array
-                -- make checkbox copy information that is already included in shipping information
-                -- Make a post request to the server, and then to the database.
+        DONE!        -- Figure out how information collected will be stored in an array
+        DONE!        -- make checkbox copy information that is already included in shipping information
+        DONE!        -- Make a post request to the server, and then to the database.
+
+        ADMIN PAGE:
+
+                -- Admin Page: Mark Orders in Order List complete by changing status
+                -- Admin Page: Adjust information in an already existing product
+                -- Mobile Styles
 
                 
 
@@ -41,7 +58,7 @@ TODO:
 
 
 
-    
+
 
         DONE!        -- Create Database - Create tables for products, product category, reviews, customers, cart state, orders, country codes, state codes users
         

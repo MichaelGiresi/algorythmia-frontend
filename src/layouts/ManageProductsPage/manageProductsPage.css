@@ -8,17 +8,22 @@
 }
 
 .admin-add-product-container {
-  width: 25%;
   max-width: 1600px;
   display: flex;
   flex-direction: column;
   color: #c3c3c3;
   margin: 50px auto 0 0;
+  width: 100%;
 }
 
 .admin-input-form h1 {
   align-self: center;
   margin-top: 0px;
+}
+
+.admin-input-form-input {
+  background-color: #c3c3c3;
+  overflow: auto;
 }
 
 .admin-input-form {
@@ -39,6 +44,7 @@
 .admin-input-label {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid #c3c3c3;
 }
 
 .admin-order-list-container {
@@ -46,6 +52,19 @@
   border: 1px solid #c3c3c3;
   margin: 50px auto 50px auto;
   width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+
+.admin-remove-product-container {
+  color: #c3c3c3;
+  margin: 50px 0 0 auto;
+  border: 1px solid #c3c3c3;
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
 }
 
 .admin-order-list-container table {
@@ -55,19 +74,13 @@
 
 .admin-add-remove-product-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  margin: 0 auto 0 auto;
+  width: 100%;
 }
 
 .admin-order-list-container h1 {
   text-align: center;
-}
-
-.admin-remove-product-container {
-  color: #c3c3c3;
-  margin: 50px 0 0 auto;
-  border: 1px solid #c3c3c3;
-  padding: 10px;
-  width: 70%;
 }
 
 .admin-remove-product-container h1 {
@@ -80,4 +93,31 @@
   width: 100%;
   font-family: "JetBrains Mono";
   font-size: 14px;
+}
+
+.admin-edit-product-select-name {
+  background-color: #c3c3c3;
+}
+
+@media (min-width: 768px) {
+  .admin-add-product-container {
+    width: 80%;
+    margin: 50px auto 0 auto;
+  }
+}
+@media (min-width: 1250px) {
+  .admin-add-remove-product-container {
+    flex-direction: row;
+  }
+  .admin-add-product-container {
+    width: 40%;
+  }
+}
+@media (min-width: 1400px) {
+  .admin-remove-product-container {
+    overflow-x: hidden;
+  }
+  .admin-order-list-container {
+    overflow-x: hidden;
+  }
 }/*# sourceMappingURL=manageProductsPage.css.map */

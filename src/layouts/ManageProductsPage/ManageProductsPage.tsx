@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export const ManageProductsPage = () => {
+  let selectProduct = 0
   interface AddProduct {
     name: String,
     sku: String,
@@ -32,6 +33,7 @@ export const ManageProductsPage = () => {
   const [orders, setOrders] = useState([])
   const [products, setProducts] = useState([])
   const [fetchTrigger, setFetchTrigger] = useState(false)
+  const [selectedEditProduct, setSelectedEditProduct] = useState(-1)
   const [adminFormData, setAdminFormData] = useState({
     name: '',
     sku: '',
@@ -48,6 +50,10 @@ export const ManageProductsPage = () => {
       id: 0
     }
   });
+
+  useEffect(() => {
+    console.log(selectedEditProduct)
+  },[selectedEditProduct])
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -182,6 +188,57 @@ category: {
     }
   };
 
+/* Now, we have to do a put function and place the new data based off of the selected id. Probably
+wont need local variables because the state is set before clicking the submit button. */
+
+
+  const handleEditProductChange = (event) => {
+    const selectedProductId = parseInt(event.target.value);
+    console.log(selectedProductId)
+    setSelectedEditProduct(selectedProductId);
+
+    if (selectedProductId !== -1) {
+      console.log(selectedProductId)
+      let selectedProduct 
+      for(let i = 0; i < products.length; i++) {
+        if(products[i].id === selectedProductId) {
+          console.log(products[i].id)
+          console.log(products[i].sku)
+          let selectedProduct = products[i]
+
+      console.log(selectedProduct)
+      setAdminFormData({
+        ...adminFormData,
+        sku: selectedProduct.sku,
+        sizeSmall: selectedProduct.sizeSmall,
+        sizeMedium: selectedProduct.sizeMedium,
+        sizeLarge: selectedProduct.sizeLarge,
+        sizeExtraLarge: selectedProduct.sizeExtraLarge,
+        sizeExtraExtraLarge: selectedProduct.sizeExtraExtraLarge,
+        description: selectedProduct.description,
+        unitPrice: selectedProduct.unitPrice,
+        imageUrl: selectedProduct.imageUrl,
+        // category: selectedProduct.category,
+      });
+    }
+  }
+    } else {
+      setAdminFormData({
+        name: '',
+        sku: '',
+        sizeSmall: 0,
+        sizeMedium: 0,
+        sizeLarge: 0,
+        sizeExtraLarge: 0,
+        sizeExtraExtraLarge: 0,
+        description: '',
+        unitPrice: 0,
+        imageUrl: '',
+        active: true,
+        category: { id: 0 },
+      });
+    }
+  };
 
 
 
@@ -248,11 +305,74 @@ category: {
           </form>
 
         </div>
+        <div className='admin-add-product-container'>
+          <form className='admin-input-form'>
+            <h1>Edit Product</h1>
+            <label className='admin-input-label'>
+              Name:
+              <select className='admin-edit-product-select-name' value={selectedEditProduct} name='product' onChange={handleEditProductChange}>
+                <option  value={-1} >Select a Product</option>
+                {products.map((product) => (
+                  <option value={product.id}>{product.name}</option>
+                ))}
+              </select>
+            </label>
+            <label className='admin-input-label'>
+              SKU:
+              <input className='admin-input-form-input' type="text" name="sku" value={adminFormData.sku} onChange={handleChange} />
+            </label>
+            <div className='admin-size-input-container'>
+              <h4 style={{ marginBottom: '10px', marginTop: '0px' }}>Sizes:</h4>
+              <label className='admin-input-label'> Small
+                <input className='admin-input-form-input' min={0} type="number" name="sizeSmall" value={adminFormData.sizeSmall} onChange={handleChange} />
+              </label>
+
+              <label className='admin-input-label'> Medium
+                <input className='admin-input-form-input' min={0} type="number" name="sizeMedium" value={adminFormData.sizeMedium} onChange={handleChange} />
+              </label>
+
+              <label className='admin-input-label'> Large
+                <input className='admin-input-form-input' min={0} type="number" name="sizeLarge" value={adminFormData.sizeLarge} onChange={handleChange} />
+              </label>
+
+              <label className='admin-input-label'> Extra Large
+                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraLarge" value={adminFormData.sizeExtraLarge} onChange={handleChange} />
+              </label>
+
+              <label className='admin-input-label'> Extra Extra Large
+                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraExtraLarge" value={adminFormData.sizeExtraExtraLarge} onChange={handleChange} />
+              </label>
+
+            </div>
+            <label className='admin-input-label'>
+              Description:
+              <input className='admin-input-form-input' type="test" name="description" value={adminFormData.description} onChange={handleChange} />
+            </label>
+            <label className='admin-input-label'>
+              Price:
+              <input className='admin-input-form-input' min={0} type="number" name="unitPrice" value={adminFormData.unitPrice} onChange={handleChange} />
+            </label>
+            <label className='admin-input-label'>
+              Image URL:
+              <input className='admin-input-form-input' type="text" name="imageUrl" value={adminFormData.imageUrl} onChange={handleChange} />
+            </label>
+            <label className='admin-input-label'> Product Category
+              <select className='admin-input-form-input' name="category" value={adminFormData.category.id} onChange={handleChange}>
+                <option value={0}>Select a Category</option>
+                <option value={1}>Shirts</option>
+                <option value={2}>Posters</option>
+              </select>
+            </label>
+            <button style={{ cursor: 'pointer', fontFamily: 'JetBrains Mono' }} onClick={handleSubmit}>Submit New Product</button>
+          </form>
+
+        </div>
+      </div>
         <div className='admin-remove-product-container'>
           <h1>Remove Product</h1>
-          <table>
+          <table style={{borderCollapse: 'collapse', minWidth: '1200px'}}>
             <thead>
-              <tr>
+              <tr style={{borderBottom: '1px solid #c3c3c3'}}>
                 <th>Remove</th>
                 <th>ID</th>
                 <th>SKU</th>
@@ -266,8 +386,8 @@ category: {
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr key={product.id}>
-                  <td><button style={{ cursor: 'pointer' }} onClick={() => { deleteProduct(product.id) }}>Remove</button></td>
+                <tr key={product.id} style={{borderBottom: '1px solid #c3c3c3'}}>
+                  <td><button style={{ cursor: 'pointer', fontFamily: 'JetBrains Mono' }} onClick={() => { deleteProduct(product.id) }}>Remove</button></td>
                   <td>{product.id}</td>
                   <td>{product.sku}</td>
                   <td>{product.name}</td>
@@ -282,13 +402,12 @@ category: {
             </tbody>
           </table>
         </div>
-      </div>
 
       <div className='admin-order-list-container'>
-        <h1>OrderList</h1>
-        <table>
+        <h1>Order List</h1>
+        <table style={{borderCollapse: 'collapse', minWidth: '1200px'}}>
           <thead>
-            <tr>
+            <tr style={{borderBottom: "1px solid #c3c3c3"}}>
               <th>ID</th>
               <th>Tracking Number</th>
               <th>Total Price</th>
@@ -303,7 +422,7 @@ category: {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr key={order.id}>
+              <tr key={order.id} style={{borderBottom: "1px solid #c3c3c3"}} >
                 <td>{order.id}</td>
                 <td>{order.orderTrackingNumber}</td>
                 <td>${order.totalPrice}</td>
