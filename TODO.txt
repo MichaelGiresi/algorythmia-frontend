@@ -13,7 +13,7 @@ BUGS:
         NAV HAMBURGER: 
                 -- Add admin link
                 -- Add login / logout link
-                
+
         FOOTER:
                 -- Work on Styles
                 -- Text needs to be fixed
@@ -90,6 +90,14 @@ TODO:
 
 
 // devlog
+
+---- Goals for Tuesday 4/17/23
+
+        DONE!        -- ADMIN PAGE: Create a PUT request for edit product, and refresh the other components
+        DONE!        -- Admin Page: Create a button for each row in order list called Completed. Have status update, make put request
+        -- Authentication on back end
+        -- Work out all bugs. Go page by page
+        -- If time left over, begin deployment.
 
 ---- Goals for Saturday, April 8th
 
