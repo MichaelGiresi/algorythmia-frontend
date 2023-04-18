@@ -5,10 +5,28 @@ import { CartContext } from '../../Contexts/CartContext';
 import '../ManageProductsPage/manageProductsPage.css'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { stringify } from 'querystring';
 
 export const ManageProductsPage = () => {
   let selectProduct = 0
   interface AddProduct {
+    name: String,
+    sku: String,
+    sizeSmall: Number,
+    sizeMedium: Number,
+    sizeLarge: Number,
+    sizeExtraLarge: Number,
+    sizeExtraExtraLarge: Number,
+    description: String,
+    unitPrice: Number,
+    imageUrl: String,
+    active: Boolean,
+    category: {
+      id: Number;
+    };
+  }
+
+  interface EditProduct {
     name: String,
     sku: String,
     sizeSmall: Number,
@@ -34,7 +52,23 @@ export const ManageProductsPage = () => {
   const [products, setProducts] = useState([])
   const [fetchTrigger, setFetchTrigger] = useState(false)
   const [selectedEditProduct, setSelectedEditProduct] = useState(-1)
-  const [adminFormData, setAdminFormData] = useState({
+  const [adminNewProductFormData, setAdminNewProductFormData] = useState({
+    name: '',
+    sku: '',
+    sizeSmall: 0,
+    sizeMedium: 0,
+    sizeLarge: 0,
+    sizeExtraLarge: 0,
+    sizeExtraExtraLarge: 0,
+    description: '',
+    unitPrice: 0,
+    imageUrl: '',
+    active: true,
+    category: {
+      id: 0
+    }
+  });
+  const [adminEditProductFormData, setAdminEditProductFormData] = useState({
     name: '',
     sku: '',
     sizeSmall: 0,
@@ -67,14 +101,12 @@ export const ManageProductsPage = () => {
       }
     };
     fetchOrders();
-  }, [fetchTrigger])
 
-  useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/products')
+        const response = await fetch('http://localhost:8080/api/products/')
         const data = await response.json();
-        const responseData = data._embedded.products
+        const responseData = data
         setProducts(responseData)
       } catch (error) {
         console.error('Error fetching orders:', error)
@@ -91,42 +123,58 @@ export const ManageProductsPage = () => {
 
 
   const newProduct: AddProduct = {
-    name: adminFormData.name,
-    sku: adminFormData.sku,
-    sizeSmall: adminFormData.sizeSmall,
-    sizeMedium: adminFormData.sizeMedium,
-    sizeLarge: adminFormData.sizeLarge,
-    sizeExtraLarge: adminFormData.sizeExtraLarge,
-    sizeExtraExtraLarge: adminFormData.sizeExtraExtraLarge,
-    description: adminFormData.description,
-    unitPrice: adminFormData.unitPrice,
-    imageUrl: adminFormData.imageUrl,
+    name: adminNewProductFormData.name,
+    sku: adminNewProductFormData.sku,
+    sizeSmall: adminNewProductFormData.sizeSmall,
+    sizeMedium: adminNewProductFormData.sizeMedium,
+    sizeLarge: adminNewProductFormData.sizeLarge,
+    sizeExtraLarge: adminNewProductFormData.sizeExtraLarge,
+    sizeExtraExtraLarge: adminNewProductFormData.sizeExtraExtraLarge,
+    description: adminNewProductFormData.description,
+    unitPrice: adminNewProductFormData.unitPrice,
+    imageUrl: adminNewProductFormData.imageUrl,
     active: true,
-    category: { id: adminFormData.category.id }
+    category: { id: adminNewProductFormData.category.id }
   }
 
-  const handleSubmit = (event) => {
+  const editProduct: EditProduct = {
+    name: adminEditProductFormData.name,
+    sku: adminEditProductFormData.sku,
+    sizeSmall: adminEditProductFormData.sizeSmall,
+    sizeMedium: adminEditProductFormData.sizeMedium,
+    sizeLarge: adminEditProductFormData.sizeLarge,
+    sizeExtraLarge: adminEditProductFormData.sizeExtraLarge,
+    sizeExtraExtraLarge: adminEditProductFormData.sizeExtraExtraLarge,
+    description: adminEditProductFormData.description,
+    unitPrice: adminEditProductFormData.unitPrice,
+    imageUrl: adminEditProductFormData.imageUrl,
+    active: true,
+    category: { id: adminEditProductFormData.category.id }
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if(adminFormData.name === '' || 
-        adminFormData.sku === ''  ||
-        // adminFormData.sizeSmall === 0 || 
-        // adminFormData.sizeMedium === 0 || 
-        // adminFormData.sizeLarge === 0 ||
-        // adminFormData.sizeExtraLarge === 0 ||
-        // adminFormData.sizeExtraExtraLarge === 0 ||
-        adminFormData.description === '' ||
-        adminFormData.unitPrice === 0 ||
-        adminFormData.imageUrl === '' ||   
-        adminFormData.category.id === 0
+    if(adminNewProductFormData.name === '' || 
+        adminNewProductFormData.sku === ''  ||
+        // adminNewProductFormData.sizeSmall === 0 || 
+        // adminNewProductFormData.sizeMedium === 0 || 
+        // adminNewProductFormData.sizeLarge === 0 ||
+        // adminNewProductFormData.sizeExtraLarge === 0 ||
+        // adminNewProductFormData.sizeExtraExtraLarge === 0 ||
+        adminNewProductFormData.description === '' ||
+        adminNewProductFormData.unitPrice === 0 ||
+        adminNewProductFormData.imageUrl === '' ||   
+        adminNewProductFormData.category.id === 0
         ) {
 
           toast.error("Please Complete all Forms")
   } else {
+    console.log(newProduct)
     console.log("Sending data:", JSON.stringify(newProduct))
     
     
     // make POST request to server
-    fetch(`http://localhost:8080/api/products/`, {
+    await fetch(`http://localhost:8080/api/products/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -137,9 +185,9 @@ export const ManageProductsPage = () => {
     .then(response => response.json())
     .then(data => toast.success("Product Added Successfully"))
     .catch(error => console.error(error));
-    setFetchTrigger((prev) => !prev);
     
-    setAdminFormData({
+    
+    setAdminNewProductFormData({
       name: '',
       sku: '',
       sizeSmall: 0,
@@ -155,7 +203,7 @@ category: {
   id: 0
 }
 })
-
+setFetchTrigger((prev) => !prev);
   }
   };
   
@@ -163,11 +211,21 @@ category: {
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     
-    setAdminFormData(prevFormData => ({
+    setAdminNewProductFormData(prevFormData => ({
       ...prevFormData,
       [name]: name === 'category' ? { id: parseInt(value) } : value
     }));
-    console.log(adminFormData.category)
+    console.log(adminNewProductFormData.category)
+  };
+
+  const handleEditChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    
+    setAdminEditProductFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: name === 'category' ? { id: parseInt(value) } : value
+    }));
+    console.log(adminEditProductFormData.category)
   };
 
   const deleteProduct = async (e) => {
@@ -207,8 +265,9 @@ wont need local variables because the state is set before clicking the submit bu
           let selectedProduct = products[i]
 
       console.log(selectedProduct)
-      setAdminFormData({
-        ...adminFormData,
+      setAdminEditProductFormData({
+        ...adminEditProductFormData,
+        name: selectedProduct.name,
         sku: selectedProduct.sku,
         sizeSmall: selectedProduct.sizeSmall,
         sizeMedium: selectedProduct.sizeMedium,
@@ -218,12 +277,12 @@ wont need local variables because the state is set before clicking the submit bu
         description: selectedProduct.description,
         unitPrice: selectedProduct.unitPrice,
         imageUrl: selectedProduct.imageUrl,
-        // category: selectedProduct.category,
+        category: selectedProduct.category
       });
     }
   }
     } else {
-      setAdminFormData({
+      setAdminEditProductFormData({
         name: '',
         sku: '',
         sizeSmall: 0,
@@ -240,6 +299,74 @@ wont need local variables because the state is set before clicking the submit bu
     }
   };
 
+  const handleEdit = async (event) => {
+    event.preventDefault();
+    // console.log(adminNewProductFormData)
+    // console.log(newProduct)
+    const url = `http://localhost:8080/api/products/${selectedEditProduct}`
+    const options = {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(adminEditProductFormData)
+    };
+    const response = await fetch(url, options);
+    if(response.status === 200) {
+      console.log("Successfully updated the values of the selected product")
+      toast.success("Product Edited Successfully")
+
+      setAdminEditProductFormData({
+        name: '',
+        sku: '',
+        sizeSmall: 0,
+        sizeMedium: 0,
+        sizeLarge: 0,
+        sizeExtraLarge: 0,
+        sizeExtraExtraLarge: 0,
+        description: '',
+        unitPrice: 0,
+        imageUrl: '',
+        active: true,
+        category: { id: 0 },
+      });
+      setSelectedEditProduct(-1)
+      setFetchTrigger((prev) => !prev);
+    } else {
+      console.error("Failed to update the quantity")
+    }
+  } 
+
+  const markAsComplete = async (orderId) => {
+    try {
+      // Fetch the current order
+      const orderResponse = await fetch(`http://localhost:8080/api/orders/${orderId}`);
+      if (!orderResponse.ok) {
+        throw new Error(`Error fetching order: ${orderResponse.statusText}`);
+      }
+      const order = await orderResponse.json();
+  
+      // Update the status
+      const setStatus = !order.status;
+      console.log(setStatus);
+      const url = `http://localhost:8080/api/orders/${orderId}/status`;
+      const options = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(setStatus),
+      };
+  
+      const response = await fetch(url, options);
+      setFetchTrigger((prev) => !prev);
+      if (response.status === 200) {
+        console.log("The Order Status was successfully changed");
+      } else {
+        console.error("Failed to Update the Order Status");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
 
   return (
@@ -253,55 +380,55 @@ wont need local variables because the state is set before clicking the submit bu
             <h1>New Product</h1>
             <label className='admin-input-label'>
               Name:
-              <input className='admin-input-form-input' type="text" name="name" value={adminFormData.name} onChange={handleChange} />
+              <input className='admin-input-form-input' type="text" name="name" value={adminNewProductFormData.name} onChange={handleChange} />
             </label>
             <label className='admin-input-label'>
               SKU:
-              <input className='admin-input-form-input' type="text" name="sku" value={adminFormData.sku} onChange={handleChange} />
+              <input className='admin-input-form-input' type="text" name="sku" value={adminNewProductFormData.sku} onChange={handleChange} />
             </label>
             <div className='admin-size-input-container'>
               <h4 style={{ marginBottom: '10px', marginTop: '0px' }}>Sizes:</h4>
               <label className='admin-input-label'> Small
-                <input className='admin-input-form-input' min={0} type="number" name="sizeSmall" value={adminFormData.sizeSmall} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeSmall" value={adminNewProductFormData.sizeSmall} onChange={handleChange} />
               </label>
 
               <label className='admin-input-label'> Medium
-                <input className='admin-input-form-input' min={0} type="number" name="sizeMedium" value={adminFormData.sizeMedium} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeMedium" value={adminNewProductFormData.sizeMedium} onChange={handleChange} />
               </label>
 
               <label className='admin-input-label'> Large
-                <input className='admin-input-form-input' min={0} type="number" name="sizeLarge" value={adminFormData.sizeLarge} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeLarge" value={adminNewProductFormData.sizeLarge} onChange={handleChange} />
               </label>
 
               <label className='admin-input-label'> Extra Large
-                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraLarge" value={adminFormData.sizeExtraLarge} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraLarge" value={adminNewProductFormData.sizeExtraLarge} onChange={handleChange} />
               </label>
 
               <label className='admin-input-label'> Extra Extra Large
-                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraExtraLarge" value={adminFormData.sizeExtraExtraLarge} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraExtraLarge" value={adminNewProductFormData.sizeExtraExtraLarge} onChange={handleChange} />
               </label>
 
             </div>
             <label className='admin-input-label'>
               Description:
-              <input className='admin-input-form-input' type="test" name="description" value={adminFormData.description} onChange={handleChange} />
+              <input className='admin-input-form-input' type="test" name="description" value={adminNewProductFormData.description} onChange={handleChange} />
             </label>
             <label className='admin-input-label'>
               Price:
-              <input className='admin-input-form-input' min={0} type="number" name="unitPrice" value={adminFormData.unitPrice} onChange={handleChange} />
+              <input className='admin-input-form-input' min={0} type="number" name="unitPrice" value={adminNewProductFormData.unitPrice} onChange={handleChange} />
             </label>
             <label className='admin-input-label'>
               Image URL:
-              <input className='admin-input-form-input' type="text" name="imageUrl" value={adminFormData.imageUrl} onChange={handleChange} />
+              <input className='admin-input-form-input' type="text" name="imageUrl" value={adminNewProductFormData.imageUrl} onChange={handleChange} />
             </label>
             <label className='admin-input-label'> Product Category
-              <select className='admin-input-form-input' name="category" value={adminFormData.category.id} onChange={handleChange}>
+              <select className='admin-input-form-input' name="category" value={adminNewProductFormData.category.id} onChange={handleChange}>
                 <option value={0}>Select a Category</option>
                 <option value={1}>Shirts</option>
                 <option value={2}>Posters</option>
               </select>
             </label>
-            <button style={{ cursor: 'pointer', fontFamily: 'JetBrains Mono' }} onClick={handleSubmit}>Submit New Product</button>
+            <button style={{ cursor: 'pointer', fontFamily: 'JetBrains Mono' }} onClick={handleSubmit}>SUBMIT NEW PRODUCT</button>
           </form>
 
         </div>
@@ -309,7 +436,7 @@ wont need local variables because the state is set before clicking the submit bu
           <form className='admin-input-form'>
             <h1>Edit Product</h1>
             <label className='admin-input-label'>
-              Name:
+              Existing Product:
               <select className='admin-edit-product-select-name' value={selectedEditProduct} name='product' onChange={handleEditProductChange}>
                 <option  value={-1} >Select a Product</option>
                 {products.map((product) => (
@@ -318,52 +445,56 @@ wont need local variables because the state is set before clicking the submit bu
               </select>
             </label>
             <label className='admin-input-label'>
+              Name:
+              <input className='admin-input-form-input' type="text" name="name" value={adminEditProductFormData.name} onChange={handleEditChange} />
+            </label>
+            <label className='admin-input-label'>
               SKU:
-              <input className='admin-input-form-input' type="text" name="sku" value={adminFormData.sku} onChange={handleChange} />
+              <input className='admin-input-form-input' type="text" name="sku" value={adminEditProductFormData.sku} onChange={handleEditChange} />
             </label>
             <div className='admin-size-input-container'>
               <h4 style={{ marginBottom: '10px', marginTop: '0px' }}>Sizes:</h4>
               <label className='admin-input-label'> Small
-                <input className='admin-input-form-input' min={0} type="number" name="sizeSmall" value={adminFormData.sizeSmall} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeSmall" value={adminEditProductFormData.sizeSmall} onChange={handleEditChange} />
               </label>
 
               <label className='admin-input-label'> Medium
-                <input className='admin-input-form-input' min={0} type="number" name="sizeMedium" value={adminFormData.sizeMedium} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeMedium" value={adminEditProductFormData.sizeMedium} onChange={handleEditChange} />
               </label>
 
               <label className='admin-input-label'> Large
-                <input className='admin-input-form-input' min={0} type="number" name="sizeLarge" value={adminFormData.sizeLarge} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeLarge" value={adminEditProductFormData.sizeLarge} onChange={handleEditChange} />
               </label>
 
               <label className='admin-input-label'> Extra Large
-                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraLarge" value={adminFormData.sizeExtraLarge} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraLarge" value={adminEditProductFormData.sizeExtraLarge} onChange={handleEditChange} />
               </label>
 
               <label className='admin-input-label'> Extra Extra Large
-                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraExtraLarge" value={adminFormData.sizeExtraExtraLarge} onChange={handleChange} />
+                <input className='admin-input-form-input' min={0} type="number" name="sizeExtraExtraLarge" value={adminEditProductFormData.sizeExtraExtraLarge} onChange={handleEditChange} />
               </label>
 
             </div>
             <label className='admin-input-label'>
               Description:
-              <input className='admin-input-form-input' type="test" name="description" value={adminFormData.description} onChange={handleChange} />
+              <input className='admin-input-form-input' type="test" name="description" value={adminEditProductFormData.description} onChange={handleEditChange} />
             </label>
             <label className='admin-input-label'>
               Price:
-              <input className='admin-input-form-input' min={0} type="number" name="unitPrice" value={adminFormData.unitPrice} onChange={handleChange} />
+              <input className='admin-input-form-input' min={0} type="number" name="unitPrice" value={adminEditProductFormData.unitPrice} onChange={handleEditChange} />
             </label>
             <label className='admin-input-label'>
               Image URL:
-              <input className='admin-input-form-input' type="text" name="imageUrl" value={adminFormData.imageUrl} onChange={handleChange} />
+              <input className='admin-input-form-input' type="text" name="imageUrl" value={adminEditProductFormData.imageUrl} onChange={handleEditChange} />
             </label>
             <label className='admin-input-label'> Product Category
-              <select className='admin-input-form-input' name="category" value={adminFormData.category.id} onChange={handleChange}>
+              <select className='admin-input-form-input' name="category" value={adminEditProductFormData.category.id} onChange={handleEditChange}>
                 <option value={0}>Select a Category</option>
                 <option value={1}>Shirts</option>
                 <option value={2}>Posters</option>
               </select>
             </label>
-            <button style={{ cursor: 'pointer', fontFamily: 'JetBrains Mono' }} onClick={handleSubmit}>Submit New Product</button>
+            <button style={{ cursor: 'pointer', fontFamily: 'JetBrains Mono' }} onClick={handleEdit}>SUBMIT EDITS</button>
           </form>
 
         </div>
@@ -408,6 +539,7 @@ wont need local variables because the state is set before clicking the submit bu
         <table style={{borderCollapse: 'collapse', minWidth: '1200px'}}>
           <thead>
             <tr style={{borderBottom: "1px solid #c3c3c3"}}>
+              <th>Mark as Complete</th>
               <th>ID</th>
               <th>Tracking Number</th>
               <th>Total Price</th>
@@ -423,6 +555,7 @@ wont need local variables because the state is set before clicking the submit bu
           <tbody>
             {orders.map((order) => (
               <tr key={order.id} style={{borderBottom: "1px solid #c3c3c3"}} >
+                <td><button style={{ cursor: 'pointer', fontFamily: 'JetBrains Mono', backgroundColor: order.status ? "green" : 'red' }} onClick={() => {markAsComplete(order.id)}}>{order.status ? "Mark As Completed" : "Mark As Incomplete"}</button></td>
                 <td>{order.id}</td>
                 <td>{order.orderTrackingNumber}</td>
                 <td>${order.totalPrice}</td>

@@ -25,12 +25,14 @@
   overflow: hidden;
   height: 100vh;
   top: 0px;
+  overflow-y: scroll;
   right: 0px;
   border-left: 3px solid #c3c3c3;
 }
 @media (min-width: 769px) {
   #cartId.open {
     width: 500px;
+    overflow-y: scroll;
   }
 }
 
