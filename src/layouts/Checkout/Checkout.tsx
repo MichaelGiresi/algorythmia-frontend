@@ -455,21 +455,13 @@ try {
     5: "sizeExtraExtraLarge"
 }
 
-const sizeMappingPutRequest = {
-  1: "size_small",
-  2: "size_medium",
-  3: "size_large",
-  4: "size_extra_large",
-  5: "size_extra_extra_large"
-}
-
-  for(let i = 0; i < products.length; i++) {
-    for(let j = 0; j < cartContext?.localCartItems.length; j++){
-      if(products[i].id === cartContext?.localCartItems[j][0]) {
-        // If the product id from the get request, and the product id from the 
-        // current local cart items elemet in the array equal, then we want to create
-        // a put request, involving the size id of the localcartitems[j] array.
-        // Subtract the quanity from the value in the field of products[i].sizeMapping[cartContext?.localcartItems[j][9]]
+// If the product id from the get request, and the product id from the 
+// current local cart items elemet in the array equal, then we want to create
+// a put request, involving the size id of the localcartitems[j] array.
+// Subtract the quanity from the value in the field of products[i].sizeMapping[cartContext?.localcartItems[j][9]]
+for(let i = 0; i < products.length; i++) {
+  for(let j = 0; j < cartContext?.localCartItems.length; j++){
+    if(products[i].id === cartContext?.localCartItems[j][0]) {
         const size = sizeMapping[cartContext?.localCartItems[j][9]]
         const quantity = cartContext?.localCartItems[j][4]
         const productSize = products[i][size]
