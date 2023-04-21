@@ -19,7 +19,7 @@ const ShopAll = () => {
     useEffect(() => {
   
       const fetchProducts = async () => {
-        const baseUrl = 'http://localhost:8080/api/products'
+        const baseUrl = 'https://18.217.214.80:8080/api/products'
         const url = `${baseUrl}?page=0&size=20`;
         // const url = `${baseUrl}`
   

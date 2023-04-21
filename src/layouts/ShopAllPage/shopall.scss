@@ -248,10 +248,11 @@ margin-bottom: 15px;
     width: 95%;
     margin: 0 auto 0 auto;
     border-radius: 12px;
-    display: flex;
+    display: none;
     justify-content: space-between;
     flex-direction: column;
     @media(min-width: 1024px){
+        display: flex;
         width: 221px;
     }
 }

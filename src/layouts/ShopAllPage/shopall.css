@@ -279,12 +279,13 @@
   width: 95%;
   margin: 0 auto 0 auto;
   border-radius: 12px;
-  display: flex;
+  display: none;
   justify-content: space-between;
   flex-direction: column;
 }
 @media (min-width: 1024px) {
   .sa-images-innercontainer2-row1-slide3 {
+    display: flex;
     width: 221px;
   }
 }

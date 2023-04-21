@@ -243,11 +243,16 @@
 }
 
 .cart-product-info-increment-wrapper {
-  width: 50%;
+  width: 120px;
 }
 @media (min-width: 426px) {
   .cart-product-info-increment-wrapper {
-    width: 50%;
+    width: 120px;
+  }
+}
+@media (min-width: 800px) {
+  .cart-product-info-increment-wrapper {
+    width: 30%;
   }
 }
 

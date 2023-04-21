@@ -91,7 +91,7 @@
 @media (min-width: 768px) {
   .featured-container {
     flex-direction: row;
-    margin-bottom: 50px;
+    margin-bottom: 125px;
   }
 }
 @media (min-width: 1024px) {
@@ -102,7 +102,7 @@
 @media (min-width: 1600px) {
   .featured-container {
     width: 100%;
-    margin-bottom: 120px;
+    margin-bottom: 175px;
   }
 }
 
@@ -150,7 +150,12 @@
 .container1-product-title {
   margin-left: 3%;
   font-family: "JetBrains Mono";
-  font-size: 22px;
+  font-size: 15px;
+}
+@media (min-width: 600px) {
+  .container1-product-title {
+    font-size: 18px;
+  }
 }
 @media (min-width: 768px) {
   .container1-product-title {
@@ -167,7 +172,12 @@
   margin-right: 3%;
   font-family: "JetBrains Mono";
   font-weight: 300;
-  font-size: 22px;
+  font-size: 15px;
+}
+@media (min-width: 600px) {
+  .container1-price {
+    font-size: 18px;
+  }
 }
 @media (min-width: 768px) {
   .container1-price {
@@ -229,7 +239,12 @@
   margin-left: 3%;
   font-family: "JetBrains";
   font-family: "JetBrains Mono";
-  font-size: 22px;
+  font-size: 15px;
+}
+@media (min-width: 600px) {
+  .container2-product-title {
+    font-size: 18px;
+  }
 }
 @media (min-width: 768px) {
   .container2-product-title {
@@ -247,7 +262,12 @@
   font-family: "JetBrains";
   font-weight: 300;
   font-family: "JetBrains Mono";
-  font-size: 22px;
+  font-size: 15px;
+}
+@media (min-width: 600px) {
+  .container2-price {
+    font-size: 18px;
+  }
 }
 @media (min-width: 768px) {
   .container2-price {
@@ -342,11 +362,12 @@
 .video {
   display: none;
   width: 95%;
-  margin: 0 auto 0 auto;
+  margin: 0 auto 200px auto;
 }
 @media (min-width: 768px) {
   .video {
     display: flex;
+    margin-bottom: 50px;
   }
 }
 @media (min-width: 1600px) {

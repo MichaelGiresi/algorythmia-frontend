@@ -77,14 +77,14 @@
     align-items: center;
     @media (min-width: 768px) {
         flex-direction: row;
-        margin-bottom: 50px;
+        margin-bottom: 125px;
     }
     @media (min-width: 1024px) {
         margin-bottom: 80px;
     }
     @media (min-width: 1600px) {
         width: 100%;
-        margin-bottom: 120px;
+        margin-bottom: 175px;
     }
 }
 
@@ -130,7 +130,10 @@
 .container1-product-title {
     margin-left: 3%;
     font-family: 'JetBrains Mono';
-    font-size: 22px;
+    font-size: 15px;
+    @media(min-width: 600px) {
+        font-size: 18px;
+    }
     @media(min-width: 768px) {
         font-size: 18px;
     }
@@ -145,7 +148,10 @@
     margin-right: 3%;
     font-family: 'JetBrains Mono';
     font-weight: 300;
-    font-size: 22px;
+    font-size: 15px;
+    @media(min-width: 600px) {
+        font-size: 18px;
+    }
     @media(min-width: 768px) {
         font-size: 18px;
     }
@@ -198,7 +204,10 @@
     margin-left: 3%;
     font-family: 'JetBrains';
     font-family: 'JetBrains Mono';
-    font-size: 22px;
+    font-size: 15px;
+    @media(min-width: 600px) {
+        font-size: 18px;
+    }
     @media(min-width: 768px) {
         font-size: 18px;
     }
@@ -212,7 +221,10 @@
     font-family: 'JetBrains';
     font-weight: 300;
     font-family: 'JetBrains Mono';
-    font-size: 22px;
+    font-size: 15px;
+    @media(min-width: 600px) {
+        font-size: 18px;
+    }
     @media(min-width: 768px) {
         font-size: 18px;
     }
@@ -284,9 +296,10 @@
 .video {
     display: none;
     width: 95%;
-    margin: 0 auto 0 auto;
+    margin: 0 auto 200px auto;
     @media(min-width:768px) {
         display: flex;
+        margin-bottom: 50px;
     }
     @media (min-width: 1600px) {
         width: 100%;

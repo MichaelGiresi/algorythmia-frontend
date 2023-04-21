@@ -1,28 +1,36 @@
+COMPLETED!      HOME PAGE
+COMPLETED!      NAV
+COMPLETED!      ADMIN PAGE
+COMPLETED!      SHOP ALL
+COMPLETED!      ABOUT PAGE
+COMPLETED!      HAMBURGER
+
+
 BUGS:
 
         HOME PAGE:
 
-                -- Price & Title in hero is not dynamic
-                -- Upcomming Products arent clickable
-                -- width of upcomming isnt properly dynamic
-                -- margin bottom on upcomming
+        DONE!        -- Price & Title in hero is not dynamic
+        DONE!        -- Upcomming Products arent clickable
+        DONE!        -- width of upcomming isnt properly dynamic
+        DONE!        -- margin bottom on upcomming
 
         NAV: 
-                -- Add underline on hover for each nav link
+        DONE!        -- Add underline on hover for each nav link
 
         NAV HAMBURGER: 
-                -- Add admin link
-                -- Add login / logout link
+        DONE!        -- Add admin link
+        DONE!        -- Add login / logout link
 
         FOOTER:
-                -- Work on Styles
-                -- Text needs to be fixed
+        DONE!        -- Work on Styles
+        DONE!        -- Text needs to be fixed
         DONE!        -- shop all link doesnt work
 
         SHOPALL:
 
         DONE!        -- Prices and titles arent dynamic
-                -- More to Come should disappear at a certain vw
+        DONE!        -- More to Come should disappear at a certain vw
 
         SUBTOTAL CART:
 
@@ -47,9 +55,9 @@ BUGS:
 
         ADMIN PAGE:
 
-                -- Admin Page: Mark Orders in Order List complete by changing status
-                -- Admin Page: Adjust information in an already existing product
-                -- Mobile Styles
+        DONE!        -- Admin Page: Mark Orders in Order List complete by changing status
+        DONE!        -- Admin Page: Adjust information in an already existing product
+        DONE!        -- Mobile Styles
 
                 
 

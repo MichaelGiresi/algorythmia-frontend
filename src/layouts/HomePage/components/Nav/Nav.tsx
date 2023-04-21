@@ -7,10 +7,10 @@ import { CartContext } from "../../../../Contexts/CartContext"
 import Checkout from "../../../Checkout/Checkout"
 import { useOktaAuth } from '@okta/okta-react'
 import Error from "../../../../Error"
+import { hover } from "@testing-library/user-event/dist/hover"
 
 
 
-// What we want to do
 
 //  The cart is now in the nav component. The nav component is always rendered in the app component, regardless of any other active component
 
@@ -63,7 +63,7 @@ const Nav = () => {
       cartContext?.setAbout(false)
       cartContext?.setHamburger(false)
       aboutPage.classList.toggle('show')
-      console.log(cartContext?.about)
+      // console.log(cartContext?.about)
       document.body.style.position = ''
       body.classList.remove('hidden');
       html.classList.remove('hidden');
@@ -73,7 +73,7 @@ const Nav = () => {
       cartContext?.setHamburger(true)
       hamburgerId.classList.remove('open')
       aboutPage.classList.toggle('show')
-      console.log(cartContext?.about)
+      // console.log(cartContext?.about)
       body.classList.add('hidden');
       html.classList.add('hidden');
     }
@@ -97,7 +97,7 @@ const Nav = () => {
       cartContext?.setCart(false)
       cartId.classList.toggle('open')
       cartOverlay.classList.toggle('open')
-      console.log(cartContext?.cart)
+      // console.log(cartContext?.cart)
       body.classList.remove('hidden');
       html.classList.remove('hidden');
     } else {
@@ -154,7 +154,7 @@ const Nav = () => {
   }, [cartContext?.localCartItems])
 
   if(!authState) {
-    return <Error/>
+    return 
   }
 
   const handleLogout = async () => oktaAuth.signOut();
@@ -186,22 +186,28 @@ const Nav = () => {
           <div className="hamburger-about" onClick={() => { aboutPage() }} >About Page</div>
           <a href="/shopall" className="hamburger-shopall">Shop All</a>
           <div className="hamburger-cart" onClick={() => { HamburgerCart() }}>Cart ({cartContext?.cartCount})</div>
+          {authState?.accessToken?.claims.userType === 'admin' ? <Link onClick={Hamburger} className="hamburger-cart-login" to={'/admin'}>ADMIN</Link> : <div></div>}
+          {!authState.isAuthenticated ? 
+          <Link onClick={Hamburger}className="hamburger-cart-login" to='/login'>LOGIN</Link>
+        :
+        <a className="hamburger-cart" style={{cursor: 'pointer'}} onClick={handleLogout}>LOGOUT</a>
+        }
 
         </div>
         {/* Hamburger End */}
 
         {/* Nav Links */}
         <div className='links-container'>
-          {authState?.accessToken?.claims.userType === 'admin' ? <Link className="nav-login" to={'/admin'}>ADMIN</Link> : <div></div>}
+          {authState?.accessToken?.claims.userType === 'admin' ? <Link className="nav-login link" to={'/admin'}>ADMIN</Link> : <div></div>}
           {!authState.isAuthenticated ? 
-          <Link className="nav-login" to='/login'>LOGIN</Link>
+          <Link className="nav-login link" to='/login'>LOGIN</Link>
         :
         <a style={{cursor: 'pointer'}} onClick={handleLogout}>LOGOUT</a>
         }
           
-          <Link to={'/shopall'} className="shopall">SHOP ALL</Link>
-          <div id="about" className='about' onClick={() => { aboutPage() }}>ABOUT</div>
-          <div className='cart' onClick={() => { Cart() }}>CART ({cartContext?.cartCount})</div>
+          <Link to={'/shopall'} className="shopall link">SHOP ALL</Link>
+          <div id="about" className='about link' onClick={() => { aboutPage() }}>ABOUT</div>
+          <div className='cart link' onClick={() => { Cart() }}>CART ({cartContext?.cartCount})</div>
 
         </div>
       </div>
@@ -228,7 +234,7 @@ const Nav = () => {
 
             <div key={index} id="cart-product-info-id" className="cart-product-info-container">
               <div>
-                <img id="testttt" src={cartContext?.localCartItems[index][2]} className="cart-product-image" />
+                <img id="cart-image-id" src={cartContext?.localCartItems[index][2]} className="cart-product-image" />
 
                 {/* Item Increment */}
                 <div className="cart-product-increment">

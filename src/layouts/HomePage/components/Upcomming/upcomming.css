@@ -26,12 +26,12 @@
 .up-containers {
   display: flex;
   justify-content: space-between;
-  margin: 0 auto 0 auto;
+  margin: 0 auto 50px auto;
 }
 @media (min-width: 768px) {
   .up-containers {
     margin: 0;
-    justify-content: space-around;
+    margin-bottom: 125px;
   }
 }
 

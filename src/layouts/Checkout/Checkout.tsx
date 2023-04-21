@@ -82,14 +82,10 @@ const Checkout = () => {
     small: Number
   }
 
-  useEffect(() => {
-    console.log(cartContext?.localCartItems)
-  })
+  // useEffect(() => {
+  //   console.log(cartContext?.localCartItems)
+  // })
 
-// Random number Generator
-useEffect(() => {
-
-}, [])
 
 // Checkout Interface Declarations
  const newCustomer: Customer = {
@@ -136,13 +132,17 @@ useEffect(() => {
     // const parseFinalOrderNumber = parseInt(finalOrderNumber, 10)
     setFinalOrderNumber(finalOrderNum)
     let orderTrackingNumber: Number = parseInt(finalOrderNum)
-    console.log(orderTrackingNumber)
+    // console.log(orderTrackingNumber)
     
+    if(cartContext?.localCartItems.length === 0) {
+      toast.error("Your Cart is Empty!")
+    } else {
 
+    
 
     try {
     // Check to see if customer already exists in the database, Get array of customers
-    const urlCustomers = 'http://localhost:8080/api/customers'
+    const urlCustomers = 'https://18.217.214.80:8080/api/customers'
     const optionsCustomers = {
       method: "GET", 
       headers: 
@@ -170,15 +170,15 @@ useEffect(() => {
         } 
       }
         if(a) {
-          console.log("customer already exist")
-          toast.error("The Customer already exists")
+          // console.log("customer already exist")
+          // toast.error("The Customer already exists")
 
           
         } else {
           // Post new customer to the database
           console.log("The customer does not exist, adding them to the database...")
           try{
-            await fetch('http://localhost:8080/api/customers', {
+            await fetch('https://18.217.214.80:8080/api/customers', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -186,19 +186,19 @@ useEffect(() => {
               body: JSON.stringify(newCustomer)
             }) 
             toast.success("New Customer Added")
-            console.log("New Customer Added!")
+            // console.log("New Customer Added!")
             setCustomers([...customerArray, newCustomer])
             
           }
           catch{
             toast.error("The Customer wasn't added")
-            console.log("New Customer Not added")
+            // console.log("New Customer Not added")
           }
           
           // Final get request to customers table to get all information on new customer.
           try {
             console.log("Getting the most up to date customer table...")
-            const urlCustomers = 'http://localhost:8080/api/customers'
+            const urlCustomers = 'https://18.217.214.80:8080/api/customers'
             const optionsCustomers = {
             method: "GET", 
             headers: 
@@ -207,12 +207,12 @@ useEffect(() => {
             const response = await fetch(urlCustomers, optionsCustomers);
             const data = await response.json();
             const customerArray = data._embedded.customers;
-            console.log(customerArray)
+            // console.log(customerArray)
             for(let i = 0; i < customerArray.length; i++) {
               if(customerArray[i].firstName === formData.firstName && customerArray[i].lastName === formData.lastName && customerArray[i].email === formData.email) {
 
                 activeCustomer = [customerArray[i].id, customerArray[i].firstName, customerArray[i].lastName, customerArray[i].email]
-                console.log(`The active customer has been found!`)
+                // console.log(`The active customer has been found!`)
                 } 
             }
           }
@@ -231,7 +231,7 @@ useEffect(() => {
 
     // Shipping GET and POST
     try {
-      const shippingAddressArrayUrl = 'http://localhost:8080/api/shippingAddresses'
+      const shippingAddressArrayUrl = 'https://18.217.214.80:8080/api/shippingAddresses'
       const shippingAddressArrayOptions = {
         method: "GET",
         headers: {"Content-Type": "application/json"}
@@ -239,7 +239,7 @@ useEffect(() => {
       const response = await fetch(shippingAddressArrayUrl, shippingAddressArrayOptions)
       const data = await response.json();
       const shippingAddressArray = data._embedded.shippingAddresses
-      console.log(shippingAddressArray)
+      // console.log(shippingAddressArray)
       setShippingAddresses(shippingAddressArray)
       
 
@@ -247,7 +247,7 @@ useEffect(() => {
       if (formData.shippingStreet ==='' || formData.shippingCity === '' || formData.shippingState === '' || formData.shippingCountry === '' || formData.shippingZipCode === '') {
         toast.error("Please enter all shipping address information")
       } else {
-        console.log(`The active customer id is ${activeCustomer[0]}`)
+        // console.log(`The active customer id is ${activeCustomer[0]}`)
         // check if shipping information entered in the inputs already exists on the database
         let a = false
         for (let i = 0; i < shippingAddressArray.length; i++) {
@@ -281,7 +281,7 @@ useEffect(() => {
 
           // POST to shipping_address table 
           try{
-            await fetch('http://localhost:8080/api/shippingAddress/', {
+            await fetch('https://18.217.214.80:8080/api/shippingAddress/', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -298,7 +298,7 @@ useEffect(() => {
             console.log(error)
           }
         } else {
-          console.log('The Shipping address and customer id already exist')
+          // console.log('The Shipping address and customer id already exist')
         }
       }
     }
@@ -308,7 +308,7 @@ useEffect(() => {
 
     // GET request of shipping table to get active shipping id
     try {
-      const urlShippingAddresses = 'http://localhost:8080/api/shippingAddress/'
+      const urlShippingAddresses = 'https://18.217.214.80:8080/api/shippingAddress/'
       const optionsShippingAddresses = {
       method: "GET", 
       headers: 
@@ -316,7 +316,7 @@ useEffect(() => {
       };
       const response = await fetch(urlShippingAddresses, optionsShippingAddresses);
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       const shippingAddressesQuery = data
       for(let i = 0; i < shippingAddressesQuery.length; i++) {
         if(shippingAddressesQuery[i].city === formData.shippingCity && 
@@ -326,7 +326,7 @@ useEffect(() => {
           shippingAddressesQuery[i].zipCode === formData.shippingZipCode) {
 
           activeShippingAddressId = shippingAddressesQuery[i].id
-          console.log(`This is the active shipping id = ${activeShippingAddressId}`)
+          // console.log(`This is the active shipping id = ${activeShippingAddressId}`)
           } 
       }
     }
@@ -334,25 +334,6 @@ useEffect(() => {
       console.log(`There was an error ${error}`)
     }
 
-
-
-
-  {/*
-    Finally, I am at the point of creating a proper order post request.
-
-    The order post request requires several pieces of information, and also contains two posts.
-
-    The first post is to the orders table. This post will contain the following information:
-
-      An order tracking number, total price, total quanitity, customer id, shipping address id and the status.
-
-    The second post request will be to the order_items table. This post will contain the following information:
-
-    The quantity of a specific item, the unit price of a specific item, order id, product id, size id.  
-
-    I will either have to make many post requests, however many items there are in the total quanitity, or figure out how to make one post request, and post several enteries in one shot.
-
-  */}
   try {
     const newCheckout: Checkout = {
     
@@ -367,7 +348,7 @@ useEffect(() => {
       
     }
     // make POST request to order table
-    await fetch('http://localhost:8080/api/orders/', {
+    await fetch('https://18.217.214.80:8080/api/orders/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -375,8 +356,11 @@ useEffect(() => {
       body: JSON.stringify(newCheckout)
     })
     .then(response => {
-      console.log("Response Status: ", response.status)
-      console.log("Response Status Text: ", response.statusText)
+      if(response.status === 200) {
+        toast.success("Your Order Has Been Received!")
+      }
+      // console.log("Response Status: ", response.status)
+      // console.log("Response Status Text: ", response.statusText)
     })
   } 
   catch (error){
@@ -385,7 +369,7 @@ useEffect(() => {
   }
   // Final GET request for the new order number
   try {
-    const url = 'http://localhost:8080/api/orders?size=1000'
+    const url = 'https://18.217.214.80:8080/api/orders?size=1000'
     const options = {
     method: "GET", 
     headers: 
@@ -394,14 +378,14 @@ useEffect(() => {
     const response = await fetch(url, options);
     const data = await response.json();
     const orders = data._embedded.orders
-    console.log(orders)
-    console.log(orderTrackingNumber)
+    // console.log(orders)
+    // console.log(orderTrackingNumber)
     for(let i = 0; i < orders.length; i++) {
       if(orders[i].orderTrackingNumber === orderTrackingNumber) {
 
         // activeOrderNumber = orders[i].orderTrackingNumber
         activeOrderId = orders[i].id
-        console.log(`This is the active order id = ${activeOrderId}`)
+        // console.log(`This is the active order id = ${activeOrderId}`)
         } 
     }
     
@@ -419,16 +403,17 @@ useEffect(() => {
         productId: {id: cartContext?.localCartItems[i][0]},
       sizeId: {id: cartContext?.localCartItems[i][9]}
     }
-    console.log(newOrderItems)
-    const response = await fetch('http://localhost:8080/api/orderItems/', {
+    // console.log(newOrderItems)
+    const response = await fetch('https://18.217.214.80:8080/api/orderItems/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(newOrderItems)
     });
-    console.log("Response Status: ", response.status);
-    console.log("Response Status Text: ", response.statusText);
+    
+    // console.log("Response Status: ", response.status);
+    // console.log("Response Status Text: ", response.statusText);
     
   }
   catch (error){
@@ -437,7 +422,7 @@ useEffect(() => {
 }
 
 try {
-  const url = 'http://localhost:8080/api/products'
+  const url = 'https://18.217.214.80:8080/api/products'
   const options = {
     method: "GET",
     headers: {"Content-Type": 'application/json'},
@@ -446,7 +431,7 @@ try {
   const data = await response.json();
   const products = data._embedded.products
   // console.log("Here is the list of products from the checkout button")
-  console.log(products)
+  // console.log(products)
   const sizeMapping = {
     1: "sizeSmall",
     2: "sizeMedium",
@@ -468,12 +453,12 @@ for(let i = 0; i < products.length; i++) {
         // console.log(size)
         // console.log(productSize)
         const total = productSize - quantity
-        console.log(total)
+        // console.log(total)
 
         try {
           const sizeMapPutRequest: string = sizeMapping[cartContext?.localCartItems[j][9]]
-          console.log(sizeMapPutRequest)
-          const url = `http://localhost:8080/api/products/${products[i].id}`
+          // console.log(sizeMapPutRequest)
+          const url = `https://18.217.214.80:8080/api/products/${products[i].id}`
           const options = {
             method: "PUT",
             headers: {
@@ -483,7 +468,9 @@ for(let i = 0; i < products.length; i++) {
           };
           const response = await fetch(url, options);
           if (response.status === 200) {
-            console.log("Successfully updated the quantity")
+            
+            // console.log("Successfully updated the quantity")
+            // console.log(response.status)
           } else {
             console.error("Failed to update the quantity")
           }
@@ -498,7 +485,7 @@ for(let i = 0; i < products.length; i++) {
   console.log(`There was an error getting the array of products ${error}`)
 }
 
-
+    }
 
   };
   
@@ -563,7 +550,7 @@ for(let i = 0; i < products.length; i++) {
 
 <div key={index} id="cart-product-info-id" className="checkout-product-info-container">
   <div>
-    <img id="testttt" src={cartContext?.localCartItems[index][2]} className="cart-product-image" />
+    <img id="cart-image-id" src={cartContext?.localCartItems[index][2]} className="cart-product-image" />
 
     {/* Item Increment */}
     <div className="cart-product-increment">

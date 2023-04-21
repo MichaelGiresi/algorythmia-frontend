@@ -85,17 +85,17 @@ export const ManageProductsPage = () => {
     }
   });
 
-  useEffect(() => {
-    console.log(selectedEditProduct)
-  },[selectedEditProduct])
+  // useEffect(() => {
+  //   console.log(selectedEditProduct)
+  // },[selectedEditProduct])
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/orders/')
+        const response = await fetch('https://18.217.214.80:8080/api/orders/')
         const data = await response.json();
         setOrders(data)
-        console.log(data)
+        // console.log(data)
       } catch (error) {
         console.error('Error fetching orders:', error)
       }
@@ -104,7 +104,7 @@ export const ManageProductsPage = () => {
 
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/products/')
+        const response = await fetch('https://18.217.214.80:8080/api/products/')
         const data = await response.json();
         const responseData = data
         setProducts(responseData)
@@ -113,7 +113,7 @@ export const ManageProductsPage = () => {
       }
     };
     fetchProducts();
-    console.log(products)
+    // console.log(products)
   }, [fetchTrigger])
 
   if (authState?.accessToken?.claims.userType === undefined) {
@@ -169,12 +169,12 @@ export const ManageProductsPage = () => {
 
           toast.error("Please Complete all Forms")
   } else {
-    console.log(newProduct)
-    console.log("Sending data:", JSON.stringify(newProduct))
+    // console.log(newProduct)
+    // console.log("Sending data:", JSON.stringify(newProduct))
     
     
     // make POST request to server
-    await fetch(`http://localhost:8080/api/products/`, {
+    await fetch(`https://18.217.214.80:8080/api/products/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -215,7 +215,7 @@ setFetchTrigger((prev) => !prev);
       ...prevFormData,
       [name]: name === 'category' ? { id: parseInt(value) } : value
     }));
-    console.log(adminNewProductFormData.category)
+    // console.log(adminNewProductFormData.category)
   };
 
   const handleEditChange = (event) => {
@@ -225,18 +225,18 @@ setFetchTrigger((prev) => !prev);
       ...prevFormData,
       [name]: name === 'category' ? { id: parseInt(value) } : value
     }));
-    console.log(adminEditProductFormData.category)
+    // console.log(adminEditProductFormData.category)
   };
 
   const deleteProduct = async (e) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/products/${e}`, {
+      const response = await fetch(`https://18.217.214.80:8080/api/products/${e}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
         toast.success("Product Deleted Successfully")
-        console.log('Product deleted successfully');
+        // console.log('Product deleted successfully');
         setFetchTrigger((prev) => !prev);
       } else {
         console.error('Error deleting product:', response.status, response.statusText);
@@ -252,19 +252,19 @@ wont need local variables because the state is set before clicking the submit bu
 
   const handleEditProductChange = (event) => {
     const selectedProductId = parseInt(event.target.value);
-    console.log(selectedProductId)
+    // console.log(selectedProductId)
     setSelectedEditProduct(selectedProductId);
 
     if (selectedProductId !== -1) {
-      console.log(selectedProductId)
+      // console.log(selectedProductId)
       let selectedProduct 
       for(let i = 0; i < products.length; i++) {
         if(products[i].id === selectedProductId) {
-          console.log(products[i].id)
-          console.log(products[i].sku)
+          // console.log(products[i].id)
+          // console.log(products[i].sku)
           let selectedProduct = products[i]
 
-      console.log(selectedProduct)
+      // console.log(selectedProduct)
       setAdminEditProductFormData({
         ...adminEditProductFormData,
         name: selectedProduct.name,
@@ -303,7 +303,7 @@ wont need local variables because the state is set before clicking the submit bu
     event.preventDefault();
     // console.log(adminNewProductFormData)
     // console.log(newProduct)
-    const url = `http://localhost:8080/api/products/${selectedEditProduct}`
+    const url = `https://18.217.214.80:8080/api/products/${selectedEditProduct}`
     const options = {
       method: 'PUT',
       headers: {
@@ -313,7 +313,7 @@ wont need local variables because the state is set before clicking the submit bu
     };
     const response = await fetch(url, options);
     if(response.status === 200) {
-      console.log("Successfully updated the values of the selected product")
+      // console.log("Successfully updated the values of the selected product")
       toast.success("Product Edited Successfully")
 
       setAdminEditProductFormData({
@@ -340,7 +340,7 @@ wont need local variables because the state is set before clicking the submit bu
   const markAsComplete = async (orderId) => {
     try {
       // Fetch the current order
-      const orderResponse = await fetch(`http://localhost:8080/api/orders/${orderId}`);
+      const orderResponse = await fetch(`https://18.217.214.80:8080/api/orders/${orderId}`);
       if (!orderResponse.ok) {
         throw new Error(`Error fetching order: ${orderResponse.statusText}`);
       }
@@ -348,8 +348,8 @@ wont need local variables because the state is set before clicking the submit bu
   
       // Update the status
       const setStatus = !order.status;
-      console.log(setStatus);
-      const url = `http://localhost:8080/api/orders/${orderId}/status`;
+      // console.log(setStatus);
+      const url = `https://18.217.214.80:8080/api/orders/${orderId}/status`;
       const options = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -359,7 +359,8 @@ wont need local variables because the state is set before clicking the submit bu
       const response = await fetch(url, options);
       setFetchTrigger((prev) => !prev);
       if (response.status === 200) {
-        console.log("The Order Status was successfully changed");
+        // console.log("The Order Status was successfully changed");
+        toast.success("The Order Status was Successful Changed")
       } else {
         console.error("Failed to Update the Order Status");
       }
@@ -440,7 +441,7 @@ wont need local variables because the state is set before clicking the submit bu
               <select className='admin-edit-product-select-name' value={selectedEditProduct} name='product' onChange={handleEditProductChange}>
                 <option  value={-1} >Select a Product</option>
                 {products.map((product) => (
-                  <option value={product.id}>{product.name}</option>
+                  <option key={product.id} value={product.id}>{product.name}</option>
                 ))}
               </select>
             </label>

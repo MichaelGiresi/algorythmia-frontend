@@ -98,21 +98,28 @@
 
 .footer-links-container {
   display: flex;
-  width: 50%;
   justify-content: space-between;
   font-family: "JetBrains Mono";
   text-decoration: none;
-  font-size: x-large;
+  font-size: medium;
   cursor: pointer;
 }
 
 #footer-algo-link {
   color: #c3c3c3;
   text-decoration: none;
-  font-size: x-large;
+  font-size: medium;
   font-family: "JetBrains Mono";
 }
 
+@media (min-width: 500px) {
+  #footer-algo-link {
+    font-size: x-large;
+  }
+  .footer-links-container {
+    font-size: x-large;
+  }
+}
 #footer-shopall-link {
   text-decoration: none;
   color: #c3c3c3;

@@ -18,13 +18,14 @@ import { CartContext } from "./Contexts/CartContext";
 import Checkout from "./layouts/Checkout/Checkout";
 import { oktaConfig } from "./lib/oktaConfig";
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js'
-import { Security, LoginCallback, SecureRoute } from '@okta/okta-react'
+import { Security, LoginCallback, SecureRoute, useOktaAuth } from '@okta/okta-react'
 import LoginWidget from "./Auth/LoginWidget";
 import { ManageProductsPage } from "./layouts/ManageProductsPage/ManageProductsPage";
 import { ToastContainer } from "react-toastify";
 import '../src/toastStyles.css'
 
 const oktaAuth = new OktaAuth(oktaConfig)
+
 
 function App() {
 
@@ -61,6 +62,8 @@ function App() {
   
   useEffect(() => {
     localStorage.setItem('localCartItems', JSON.stringify(localCartItems))
+    // console.log(oktaAuth)
+    // console.log(oktaAuth.authStateManager._authState)
   },[localCartItems])
   
   return (

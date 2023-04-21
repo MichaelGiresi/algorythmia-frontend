@@ -241,9 +241,12 @@
  } 
 
  .cart-product-info-increment-wrapper {
-    width: 50%;
+    width: 120px;
     @media (min-width:426px) {
-        width: 50%
+        width: 120px
+    }
+    @media(min-width:800px) {
+      width: 30%;
     }
  }
 
@@ -252,7 +255,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
  }
+
+
 
 .cart-left-overlay {
   visibility: hidden;

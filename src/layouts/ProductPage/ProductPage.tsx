@@ -31,7 +31,7 @@ export const ProductPage = (props) => {
     useEffect(() => {
   
       const fetchProduct = async () => {
-        const baseUrl = `http://localhost:8080/api/products/${productId}`
+        const baseUrl = `https://18.217.214.80:8080/api/products/${productId}`
         const response = await fetch(baseUrl);
 
         if(!response.ok) {
@@ -71,7 +71,7 @@ export const ProductPage = (props) => {
     useEffect(() => {
 
         const fetchProducts = async () => {
-          const baseUrl = 'http://localhost:8080/api/products'
+          const baseUrl = 'https://18.217.214.80:8080/api/products'
           const url = `${baseUrl}?page=0&size=20`;
           const response = await fetch(url);
 
@@ -106,12 +106,12 @@ export const ProductPage = (props) => {
             
         }
     }
-    useEffect(() => {
-        console.log('------- CART STATUS ------')
-        console.log(cartContext?.localCartItems)
-        console.log('--------------------------')
+    // useEffect(() => {
+    //     console.log('------- CART STATUS ------')
+    //     console.log(cartContext?.localCartItems)
+    //     console.log('--------------------------')
 
-    }, [cartContext?.localCartItems])
+    // }, [cartContext?.localCartItems])
 
     const sizeMapping = {
         1: "Size: S",
@@ -210,7 +210,7 @@ export const ProductPage = (props) => {
                     </div>
                     <div className='product-hero-button-container'>
                         <button onClick={() => {addToCart(product, productSize)}} id='product-add-to-cart-button'>ADD TO CART</button>
-                        <button onClick={() => {cartContext?.setLocalCartItems([])}}>Temporary wipe cart button</button>
+                        
                     </div>
                 {/* </div> */}
             </div>

@@ -114,6 +114,7 @@ code {
 
 .about-info-container h1 {
   font-family: "VT323";
+  word-wrap: break-word;
 }
 
 .about-info-container h4 {
@@ -188,10 +189,52 @@ code {
   color: black;
 }
 
+.hamburger-cart-login {
+  width: 95%;
+  height: 10vh;
+  border: 2px solid #c3c3c3;
+  border-top: none;
+  text-decoration: none;
+  color: #c3c3c3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 0 auto;
+  cursor: pointer;
+  transition: background-color .3s, color .3s;
+
+}
+.hamburger-cart-login:hover {
+  transition: background-color .3s, color .3s;
+  background-color: #c3c3c3;
+  color: black;
+}
+
 .stop-scrolling {
   overflow-y : hidden;
 }
 
 .login-widget {
   margin-bottom: 100px;
+}
+
+.link {
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.3s;
+}
+
+.link:hover::after {
+  width: 100%;
 }

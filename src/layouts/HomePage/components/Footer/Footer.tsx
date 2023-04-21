@@ -34,11 +34,10 @@ const Footer = () => {
   return (
     <div>
       <div className="footer-container">
-        <a id='footer-algo-link' href="/">ALGORYTHMIA</a>
+        <a id='footer-algo-link' className='link' href="/">ALGORYTHMIA</a>
         <div className="footer-links-container">
           <div>TERMS OF SERVICE</div>
-          <Link id='footer-shopall-link' to={'/shopall'}>SHOP ALL</Link>
-          <div onClick={aboutPage}>ABOUT</div>
+          {/* <Link id='footer-shopall-link' to={'/shopall'}>SHOP ALL</Link> */}
         </div>
       </div>
     </div>
